@@ -2,7 +2,6 @@
   @apply min-h-screen;
   @apply flex;
   @apply flex-col;
-  padding-bottom: max(env(safe-area-inset-bottom, 1rem), 1rem);
 }
 
 .layout > main {
