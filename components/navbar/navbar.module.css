@@ -9,6 +9,12 @@
 }
 
 .logo {
+  @apply flex;
   @apply font-medium;
   @apply text-2xl;
+  @apply space-x-2;
+}
+
+.logo > img {
+  @apply w-10;
 }

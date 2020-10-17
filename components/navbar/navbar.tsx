@@ -7,7 +7,10 @@ import styles from "./navbar.module.css";
 function Logo() {
   return (
     <Link href="/">
-      <a className={styles.logo}>AlertMap</a>
+      <a className={styles.logo}>
+        <img src="/logo.svg" alt="" />
+        <span>AlertMap</span>
+      </a>
     </Link>
   );
 }
