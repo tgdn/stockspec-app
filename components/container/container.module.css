@@ -1,0 +1,27 @@
+.container {
+  @apply px-3;
+}
+
+@screen sm {
+  .container {
+    @apply px-2;
+  }
+}
+
+@screen md {
+  .container {
+    @apply px-4;
+  }
+}
+
+@screen lg {
+  .container {
+    @apply mx-auto;
+  }
+}
+
+@screen xl {
+  .container {
+    @apply px-10;
+  }
+}

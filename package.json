@@ -1,0 +1,26 @@
+{
+  "name": "alertmap-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "next": "9.5.5",
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
+    "@types/node": "^14.11.8",
+    "@types/react": "^16.9.52",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.1.2",
+    "tailwindcss": "^1.9.2",
+    "typescript": "^4.0.3"
+  }
+}

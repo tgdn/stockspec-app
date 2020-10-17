@@ -1,0 +1,14 @@
+.header {
+  @apply items-start;
+  @apply shadow;
+  @apply px-4;
+  @apply py-4;
+
+  @apply md:flex;
+  @apply md:items-center;
+}
+
+.logo {
+  @apply font-medium;
+  @apply text-2xl;
+}
