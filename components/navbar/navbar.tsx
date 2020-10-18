@@ -18,7 +18,7 @@ function Logo() {
 export default function Navbar() {
   return (
     <header className={styles.header}>
-      <Container>
+      <Container className={styles.container}>
         <Logo />
       </Container>
     </header>

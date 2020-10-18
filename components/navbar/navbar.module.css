@@ -2,19 +2,30 @@
   @apply items-start;
   @apply shadow;
   @apply px-4;
-  @apply py-4;
+  @apply py-3;
+  /* avoids map going over nav */
+  z-index: 10;
 
   @apply md:flex;
   @apply md:items-center;
 }
 
+.container {
+  @apply flex;
+  @apply justify-center;
+
+  @apply md:justify-start;
+}
+
 .logo {
   @apply flex;
+  @apply items-center;
   @apply font-medium;
-  @apply text-2xl;
   @apply space-x-2;
+
+  @apply md:text-xl;
 }
 
 .logo > img {
-  @apply w-10;
+  @apply w-8;
 }
