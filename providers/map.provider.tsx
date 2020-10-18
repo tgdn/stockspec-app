@@ -4,7 +4,6 @@ import { IAction } from "types/action";
 import { MapStyle } from "types/map";
 
 interface IMapBounds {
-  zoom: number;
   lat: {
     max: number;
     min: number;
@@ -106,10 +105,7 @@ export function MapProvider({ children, bounds }: IProps) {
     }
 
     // set map bounds if defined
-    const { latitude, longitude, zoom } = nextViewport;
-    if (zoom < bounds.zoom) {
-      nextViewport.zoom = bounds.zoom;
-    }
+    const { latitude, longitude } = nextViewport;
     if (latitude > bounds.lat.max) {
       nextViewport.latitude = bounds.lat.max;
     } else if (latitude < bounds.lat.min) {

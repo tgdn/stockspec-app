@@ -7,7 +7,6 @@ import Navbar from "components/navbar";
 const Map = dynamic(() => import("components/map"), { ssr: false });
 
 const MAP_BOUNDS = {
-  zoom: 11.5,
   lat: {
     max: 48.892,
     min: 48.8157,
