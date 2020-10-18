@@ -23,10 +23,11 @@ export default function MapComponent() {
         {...viewport}
         style={{ flex: 1, width: "100%" }}
         width="100%"
-        height="300px"
+        height="500px"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_KEY}
         mapStyle={`mapbox://styles/mapbox/${currentStyle}`}
+        minZoom={11.5}
       />
     </>
   );
