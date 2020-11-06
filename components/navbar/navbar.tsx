@@ -9,7 +9,7 @@ function Logo() {
     <Link href="/">
       <a className={styles.logo}>
         <img src="/logo.svg" alt="" />
-        <span>AlertMap</span>
+        <span>stockspec</span>
       </a>
     </Link>
   );

@@ -15,7 +15,7 @@ export default function Meta({ title, description }: IProps) {
         content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
       />
 
-      <title>{title || "AlertMap"}</title>
+      <title>{title || "stockspec"}</title>
       <meta
         name="description"
         content={description || "A live map of what is going on"}
