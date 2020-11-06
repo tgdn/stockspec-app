@@ -1,4 +1,4 @@
-# AlertMap Frontend
+# stockspec Frontend
 
 ## Getting Started
 
