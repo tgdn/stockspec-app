@@ -1,0 +1,51 @@
+.container {
+  @apply flex;
+  @apply mb-6;
+}
+
+@screen sm {
+  .container {
+    @apply mt-6;
+  }
+}
+
+.fieldset {
+  @apply flex;
+  @apply flex-col;
+  @apply mx-auto;
+  @apply bg-accent-lightblack;
+  @apply py-2;
+  @apply rounded-lg;
+  box-shadow: 0px 2px 5px 3px rgba(0, 0, 0, 0.25);
+}
+
+@screen sm {
+  .fieldset {
+    @apply px-4;
+    @apply py-4;
+  }
+}
+
+@screen md {
+  .fieldset {
+    @apply py-10;
+  }
+}
+
+@screen sm {
+  .fieldset {
+    @apply mb-10;
+  }
+}
+
+@screen md {
+  .fieldset {
+    @apply w-3/5;
+  }
+}
+
+@screen lg {
+  .fieldset {
+    @apply w-1/2;
+  }
+}

@@ -22,7 +22,7 @@
   @apply items-center;
   @apply font-medium;
   @apply space-x-2;
-
+  @apply text-white;
   @apply md:text-xl;
 }
 

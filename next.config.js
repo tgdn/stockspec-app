@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    MAPBOX_KEY: process.env.MAPBOX_KEY,
+    API_URL: process.env.API_URL,
   },
 };

@@ -1,0 +1,14 @@
+.background {
+  @apply absolute;
+  @apply inset-0;
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply flex-col;
+  background-color: #fbfbfb;
+}
+
+.logo {
+  @apply flex;
+  @apply mb-6;
+}

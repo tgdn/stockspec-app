@@ -1,0 +1,28 @@
+.field {
+  @apply mb-4;
+}
+
+.field > input {
+  @apply w-full;
+  @apply px-5;
+  @apply py-3;
+  @apply text-lg;
+  @apply appearance-none;
+  @apply border-2;
+  @apply bg-accent-lighterblack;
+  @apply border-accent-lighterblack;
+  @apply text-gray-400;
+  @apply placeholder-gray-600;
+  @apply leading-tight;
+  @apply rounded-xl;
+  @apply transition-colors;
+  @apply duration-200;
+}
+
+.field > input:focus {
+  @apply border-blue-600;
+}
+
+.field.hasError > input {
+  @apply border-red-400;
+}

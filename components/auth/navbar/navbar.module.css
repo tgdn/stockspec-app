@@ -1,0 +1,32 @@
+.header {
+  @apply items-start;
+  @apply border-b-4;
+  @apply border-accent-2;
+  @apply px-4;
+  @apply py-3;
+  /* avoids map going over nav */
+  z-index: 10;
+
+  @apply md:flex;
+  @apply md:items-center;
+}
+
+.container {
+  @apply flex;
+  @apply justify-center;
+
+  @apply md:justify-start;
+}
+
+.logo {
+  @apply flex;
+  @apply items-center;
+  @apply font-medium;
+  @apply space-x-2;
+  @apply text-white;
+  @apply md:text-xl;
+}
+
+.logo > img {
+  @apply w-8;
+}

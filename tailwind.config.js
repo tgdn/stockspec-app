@@ -11,7 +11,17 @@ module.exports = {
   plugins: [],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        "accent-1": "#36393f",
+        "accent-2": "#2f3136",
+        "accent-3": "#202225",
+        "accent-black": "#050507",
+        "accent-lightblack": "#1F2125",
+        "accent-lighterblack": "#36353A",
+        "accent-darkgray": "#58595C",
+        "accent-gray": "#97989B",
+        "accent-lightgray": "#E3E5E8",
+      },
       boxShadow: {},
       borderRadius: {
         huge: "0.675rem",

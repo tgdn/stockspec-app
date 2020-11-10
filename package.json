@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "framer-motion": "^2.9.4",
     "next": "9.5.5",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "react-map-gl": "^5.2.9"
+    "react-map-gl": "^5.2.9",
+    "swr": "^0.3.8"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",

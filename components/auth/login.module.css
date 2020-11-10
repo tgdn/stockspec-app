@@ -1,0 +1,93 @@
+.heading {
+  @apply leading-snug;
+  @apply text-4xl;
+  @apply text-center;
+  @apply px-4;
+  @apply py-6;
+  @apply text-gray-400;
+}
+
+@screen md {
+  .heading {
+    @apply py-4;
+  }
+}
+
+.content {
+  --margin-x: 0;
+  @apply px-4;
+  @apply py-6;
+  margin-left: var(--margin-x);
+  margin-right: var(--margin-x);
+}
+
+@screen sm {
+  .content {
+    --margin-x: 10%;
+  }
+}
+
+@screen md {
+  .content {
+    --margin-x: 12%;
+  }
+}
+
+@screen lg {
+  .content {
+    --margin-x: 15%;
+  }
+}
+
+@screen xl {
+  .content {
+    --margin-x: 20%;
+  }
+}
+
+.continueWith {
+  @apply pb-8;
+  @apply text-gray-600;
+  @apply text-center;
+}
+
+.signupButton {
+  @apply px-4;
+  @apply py-4;
+  line-height: 14px;
+  @apply text-gray-700;
+  @apply text-center;
+  @apply rounded-lg;
+  @apply shadow;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.basicForm {
+  @apply flex;
+  @apply flex-col;
+  @apply justify-center;
+  @apply flex-1;
+}
+
+.basicForm > *:not(:last-child) {
+  @apply mb-4;
+}
+
+.loginForm {
+  @apply flex;
+  @apply flex-col;
+  @apply justify-center;
+}
+
+.error {
+  @apply text-red-500;
+  @apply mb-6;
+}
+
+.errorContainer {
+  @apply mb-6;
+}
+
+.errorContainer .error:not(:last-child) {
+  @apply mb-0;
+}
