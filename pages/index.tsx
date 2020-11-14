@@ -4,12 +4,15 @@ import { authRoute } from "providers/auth.provider";
 import Layout from "components/ui/layout";
 import Navbar from "components/ui/navbar";
 import Dashboard from "components/dashboard";
+import { DashboardProvider } from "providers/dashboard.provider";
 
 function Home() {
   return (
     <Layout bgColor="#36353A">
       <Navbar />
-      <Dashboard />
+      <DashboardProvider>
+        <Dashboard />
+      </DashboardProvider>
     </Layout>
   );
 }
