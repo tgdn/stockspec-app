@@ -1,5 +1,5 @@
 export interface IStockPrice {
-  price: string;
+  price: number;
   time: string;
   volume: number;
 }

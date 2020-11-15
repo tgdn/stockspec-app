@@ -9,5 +9,5 @@ export interface ITicker {
   industry: string;
   beta?: string;
   logo_url?: string;
-  latest_price: string;
+  price: number;
 }

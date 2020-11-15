@@ -1,17 +1,15 @@
 import React, { useContext } from "react";
-import cx from "classnames";
 import { ParentSize } from "@visx/responsive";
-import { LinePath, AreaClosed } from "@visx/shape";
 import { ITicker } from "types/ticker";
-import { extent, max, min } from "d3-array";
 
 import {
   IStockSeriesContext,
   StockSeriesContext,
   StockSeriesProvider,
 } from "providers/stockseries.provider";
-import { IStockPrice } from "types/stock-price";
 import SectionHeading from "components/dashboard/section-heading";
+
+import StockChart from "./stock-chart";
 
 import styles from "./stock-list.module.css";
 
@@ -20,60 +18,28 @@ interface IStockList {
   loading: boolean;
 }
 
-function StockChart() {
-  const {
-    prices,
-    delta,
-    chart: { width, height, x, y, yScale },
-  }: IStockSeriesContext = useContext(StockSeriesContext);
-  if (!prices) return null;
+const xAccessor = (dataPoint: IStockPrice) => new Date(dataPoint.time);
+const yAccessor = (dataPoint: IStockPrice) => dataPoint.price;
 
-  const curveClassName = delta > 0 ? styles.pos : styles.neg;
-  const areaFill = delta > 0 ? "url(#gradient-green)" : "url(#gradient-red)";
-
-  return (
-    <svg width={width} height={height}>
-      <g>
-        <LinePath
-          data={prices}
-          x={x}
-          y={y}
-          fill="transparent"
-          strokeWidth={2}
-          className={cx(styles.curve, curveClassName)}
-        />
-        <AreaClosed
-          data={prices}
-          x={x}
-          y={y}
-          yScale={yScale}
-          strokeWidth={2}
-          stroke="transparent"
-          fill={areaFill}
-        />
-      </g>
-    </svg>
-  );
+function PercentChange({ percentage }: { percentage: number }) {
+  return <div>{100 * percentage}</div>;
 }
 
-function StockRow({ ticker }: { ticker: ITicker }) {
+function StockRow() {
+  const { ticker }: IStockSeriesContext = useContext(StockSeriesContext);
   return (
     <div className={styles.row}>
-      <div className="flex flex-col w-20 space-y-1">
+      <div className="flex flex-col w-20 space-y-1 px-1 py-1">
         <span className="text-sm">{ticker.symbol}</span>
         <span className="truncate text-xs">{ticker.company}</span>
       </div>
       <div className="flex flex-1 overflow-hidden mx-2">
         <ParentSize>
-          {({ width, height }) => (
-            <StockSeriesProvider {...{ ticker, width, height }}>
-              <StockChart />
-            </StockSeriesProvider>
-          )}
+          {({ width, height }) => <StockChart {...{ width, height }} />}
         </ParentSize>
       </div>
-      <div className="flex flex-col text-xs">
-        <span>price</span>
+      <div className="flex flex-col w-12 text-xs">
+        <span className="text-right">{ticker.price}</span>
         <span>chg</span>
       </div>
     </div>
@@ -86,7 +52,12 @@ export default function StockList({ tickers, loading }: IStockList) {
       <SectionHeading>Most used</SectionHeading>
       <div className="space-y-3">
         {tickers.map((ticker: ITicker) => (
-          <StockRow ticker={ticker} key={`ticker-${ticker.symbol}`} />
+          <StockSeriesProvider
+            {...{ ticker, xAccessor, yAccessor }}
+            key={`ticker-${ticker.symbol}`}
+          >
+            <StockRow />
+          </StockSeriesProvider>
         ))}
       </div>
     </div>

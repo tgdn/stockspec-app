@@ -35,7 +35,7 @@ function Dashboard() {
   const allBetsAwaitingList = allBetsAwaiting?.results || [];
   return (
     <Container className="mt-4 flex items-start">
-      <div className="w-3/4 pr-4 grid md:grid-cols-2 gap-6">
+      <div className="w-2/3 pr-4 grid md:grid-cols-2 gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
           <div className="flex-1 space-y-2">
@@ -64,7 +64,7 @@ function Dashboard() {
           </div>
         </Card>
       </div>
-      <div className="w-1/4 pl-2 pr-4">
+      <div className="w-1/3 pl-2 pr-4">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>
     </Container>
