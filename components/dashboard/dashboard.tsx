@@ -6,6 +6,8 @@ import {
   IDashboardContext,
 } from "providers/dashboard.provider";
 import Container from "components/ui/container";
+import SectionHeading from "components/dashboard/section-heading";
+import StockList from "./stock-list";
 
 function BetRow({ bet }: { bet: IBet }) {
   const { users = [] } = bet;
@@ -13,10 +15,6 @@ function BetRow({ bet }: { bet: IBet }) {
 
   return <div>{users.map((user) => user.username).join(" / ")}</div>;
 }
-
-const SectionHeading = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="mb-4 text-white text-xl font-medium">{children}</h2>
-);
 
 const Card = ({ children }: { children: React.ReactNode }) => (
   <div className="flex overflow-hidden md:h-80 xl:h-96 flex-col px-4 md:px-8 py-3 md:py-5 rounded-lg bg-accent-darkgray shadow-lg">
@@ -63,14 +61,7 @@ function Dashboard() {
         </Card>
       </div>
       <div className="w-1/4 pl-8 pr-4">
-        <div>
-          <SectionHeading>Top stocks</SectionHeading>
-          <div className="space-y-3">
-            {tickers.map((ticker: ITicker) => (
-              <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
-            ))}
-          </div>
-        </div>
+        <StockList tickers={tickers} loading={!topTickers} />
       </div>
     </Container>
   );
