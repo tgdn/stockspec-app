@@ -34,7 +34,7 @@ function Dashboard() {
   const allBetsList = allBets?.results || [];
   const allBetsAwaitingList = allBetsAwaiting?.results || [];
   return (
-    <Container className="mt-4 flex">
+    <Container className="mt-4 flex items-start">
       <div className="w-3/4 pr-4 grid md:grid-cols-2 gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
