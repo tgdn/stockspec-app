@@ -19,7 +19,7 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Card = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex md:h-80 xl:h-96 flex-col px-4 md:px-8 py-3 md:py-5 rounded-lg bg-accent-darkgray shadow-lg">
+  <div className="flex overflow-hidden md:h-80 xl:h-96 flex-col px-4 md:px-8 py-3 md:py-5 rounded-lg bg-accent-darkgray shadow-lg">
     {children}
   </div>
 );
@@ -32,42 +32,46 @@ function Dashboard() {
   const userBetsList = userBets?.results || [];
   const allBetsList = allBets?.results || [];
   return (
-    <Container className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <Card>
-        <SectionHeading>Your bets</SectionHeading>
-        <div className="flex-1 space-y-2">
-          {userBetsList.map((bet: IBet) => (
-            <BetRow bet={bet} key={`bet-${bet.id}`} />
-          ))}
+    <Container className="mt-4 flex">
+      <div className="w-3/4 pr-4 grid md:grid-cols-2 gap-6">
+        <Card>
+          <SectionHeading>Your bets</SectionHeading>
+          <div className="flex-1 space-y-2">
+            {userBetsList.map((bet: IBet) => (
+              <BetRow bet={bet} key={`bet-${bet.id}`} />
+            ))}
+          </div>
+          <button className="px-2 py-2 font-medium rounded-md bg-accent-lightblue text-white">
+            New Bet
+          </button>
+        </Card>
+        <Card>
+          <SectionHeading>Ongoing bets</SectionHeading>
+          <div className="space-y-2">
+            {allBetsList.map((bet: IBet) => (
+              <BetRow bet={bet} key={`bet-${bet.id}`} />
+            ))}
+          </div>
+        </Card>
+        <Card>
+          <SectionHeading>Awaiting opponent </SectionHeading>
+          <div className="space-y-3">
+            {tickers.map((ticker: ITicker) => (
+              <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
+            ))}
+          </div>
+        </Card>
+      </div>
+      <div className="w-1/4 pl-8 pr-4">
+        <div>
+          <SectionHeading>Top stocks</SectionHeading>
+          <div className="space-y-3">
+            {tickers.map((ticker: ITicker) => (
+              <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
+            ))}
+          </div>
         </div>
-        <button className="px-2 py-2 font-medium rounded-md bg-accent-lightblue text-white">
-          New Bet
-        </button>
-      </Card>
-      <Card>
-        <SectionHeading>Ongoing bets</SectionHeading>
-        <div className="space-y-2">
-          {allBetsList.map((bet: IBet) => (
-            <BetRow bet={bet} key={`bet-${bet.id}`} />
-          ))}
-        </div>
-      </Card>
-      <Card>
-        <SectionHeading>Top stocks</SectionHeading>
-        <div className="space-y-3">
-          {tickers.map((ticker: ITicker) => (
-            <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
-          ))}
-        </div>
-      </Card>
-      <Card>
-        <SectionHeading>Awaiting opponent</SectionHeading>
-        <div className="space-y-3">
-          {tickers.map((ticker: ITicker) => (
-            <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
-          ))}
-        </div>
-      </Card>
+      </div>
     </Container>
   );
 }
