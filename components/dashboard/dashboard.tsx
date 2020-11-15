@@ -23,12 +23,16 @@ const Card = ({ children }: { children: React.ReactNode }) => (
 );
 
 function Dashboard() {
-  const { topTickers, userBets, allBets }: IDashboardContext = useContext(
-    DashboardContext
-  );
+  const {
+    topTickers,
+    userBets,
+    allBets,
+    allBetsAwaiting,
+  }: IDashboardContext = useContext(DashboardContext);
   const tickers = topTickers?.results || [];
   const userBetsList = userBets?.results || [];
   const allBetsList = allBets?.results || [];
+  const allBetsAwaitingList = allBetsAwaiting?.results || [];
   return (
     <Container className="mt-4 flex">
       <div className="w-3/4 pr-4 grid md:grid-cols-2 gap-6">
@@ -54,13 +58,13 @@ function Dashboard() {
         <Card>
           <SectionHeading>Awaiting opponent </SectionHeading>
           <div className="space-y-3">
-            {tickers.map((ticker: ITicker) => (
-              <div key={`ticker-${ticker.symbol}`}>{ticker.symbol}</div>
+            {allBetsAwaitingList.map((bet: IBet) => (
+              <BetRow bet={bet} key={`bet-${bet.id}`} />
             ))}
           </div>
         </Card>
       </div>
-      <div className="w-1/4 pl-8 pr-4">
+      <div className="w-1/4 pl-2 pr-4">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>
     </Container>

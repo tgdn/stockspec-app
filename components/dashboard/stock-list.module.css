@@ -1,0 +1,10 @@
+.container {
+}
+
+.row {
+  @apply flex;
+  @apply items-center;
+  @apply rounded-md;
+  @apply p-2.5;
+  @apply bg-accent-lightblack;
+}
