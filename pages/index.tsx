@@ -8,7 +8,7 @@ import { DashboardProvider } from "providers/dashboard.provider";
 
 function Home() {
   return (
-    <Layout bgColor="#36353A">
+    <Layout bgColor="hsl(252 6% 19% / 1)">
       <Navbar />
       <DashboardProvider>
         <Dashboard />

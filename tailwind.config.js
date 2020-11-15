@@ -18,7 +18,7 @@ module.exports = {
         "accent-black": "#050507",
         "accent-lightblack": "#1F2125",
         // "accent-lighterblack": "#36353A",
-        "accent-lighterblack": "hsl(252 6% 16% / 1)",
+        "accent-lighterblack": "hsl(252 6% 19% / 1)",
         // "accent-darkgray": "#58595C",
         "accent-darkgray": "hsl(240 5% 27% / 1)",
         "accent-gray": "#97989B",
