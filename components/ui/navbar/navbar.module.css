@@ -21,10 +21,10 @@
 .logo {
   @apply flex;
   @apply items-center;
-  @apply font-medium;
+  @apply font-black;
   @apply space-x-2;
   @apply text-white;
-  @apply md:text-xl;
+  @apply md:text-2xl;
 }
 
 .logo > img {

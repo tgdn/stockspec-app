@@ -24,9 +24,9 @@ function Name() {
     first_name && last_name ? `${first_name} ${last_name}` : username;
 
   return (
-    <div className="flex items-center space-x-2 cursor-default rounded-full px-2.5 py-1.5 transition duration-300 hover:bg-accent-darkgray">
+    <div className="flex items-center space-x-3 cursor-default rounded-full pl-2.5 pr-4 py-1.5 transition duration-300 hover:bg-accent-darkgray">
       <div
-        className="rounded-full w-6 h-6 bg-center bg-cover"
+        className="rounded-full w-8 h-8 bg-center bg-cover"
         style={{
           backgroundImage: `url(http://gravatar.com/avatar?f=y&d=identicon)`,
         }}
@@ -40,7 +40,7 @@ export default function Navbar() {
   return (
     <header className={styles.header}>
       <Container className={styles.container}>
-        <div className="flex-1">
+        <div className="flex flex-1 items-center">
           <Logo />
         </div>
         <div className="flex items-center">
