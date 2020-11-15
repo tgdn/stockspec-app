@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
@@ -11,6 +13,9 @@ module.exports = {
   plugins: [],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         "accent-1": "#36393f",
         "accent-2": "#2f3136",
@@ -23,6 +28,8 @@ module.exports = {
         "accent-darkgray": "hsl(240 5% 27% / 1)",
         "accent-gray": "#97989B",
         "accent-lightgray": "#E3E5E8",
+        "accent-lightblue": "#2161FE",
+        "accent-darkblue": "#2253EA",
       },
       boxShadow: {},
       borderRadius: {
