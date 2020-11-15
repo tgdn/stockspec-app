@@ -5,7 +5,8 @@
   @apply flex;
   /* @apply items-center; */
   @apply rounded-lg;
-  @apply px-3.5;
+  @apply pl-3;
+  @apply pr-3;
   @apply py-3;
   @apply bg-accent-lightblack;
 }
@@ -18,4 +19,20 @@
 .curve.neg {
   fill: transparent;
   stroke: #db2828;
+}
+
+.percentageChg {
+  @apply text-center;
+  @apply font-medium;
+  @apply rounded;
+  @apply py-0.5;
+  @apply text-white;
+}
+
+.percentageChg.pos {
+  background-color: #34d060;
+}
+
+.percentageChg.neg {
+  background-color: #db2828;
 }

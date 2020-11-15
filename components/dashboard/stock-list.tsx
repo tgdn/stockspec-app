@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import cx from "classnames";
 import { ParentSize } from "@visx/responsive";
 import { ITicker } from "types/ticker";
 
@@ -7,8 +8,9 @@ import {
   StockSeriesContext,
   StockSeriesProvider,
 } from "providers/stockseries.provider";
-import SectionHeading from "components/dashboard/section-heading";
+import { IStockPrice } from "types/stock-price";
 
+import SectionHeading from "components/dashboard/section-heading";
 import StockChart from "./stock-chart";
 
 import styles from "./stock-list.module.css";
@@ -22,11 +24,23 @@ const xAccessor = (dataPoint: IStockPrice) => new Date(dataPoint.time);
 const yAccessor = (dataPoint: IStockPrice) => dataPoint.price;
 
 function PercentChange({ percentage }: { percentage: number }) {
-  return <div>{100 * percentage}</div>;
+  return (
+    <div
+      className={cx(styles.percentageChg, {
+        [styles.neg]: percentage < 0,
+        [styles.pos]: percentage >= 0,
+      })}
+    >
+      {percentage >= 0 && "+"}
+      {(100 * percentage).toFixed(2)}%
+    </div>
+  );
 }
 
 function StockRow() {
-  const { ticker }: IStockSeriesContext = useContext(StockSeriesContext);
+  const { ticker, percentageChange }: IStockSeriesContext = useContext(
+    StockSeriesContext
+  );
   return (
     <div className={styles.row}>
       <div className="flex flex-col w-20 space-y-1 px-1 py-1">
@@ -38,9 +52,11 @@ function StockRow() {
           {({ width, height }) => <StockChart {...{ width, height }} />}
         </ParentSize>
       </div>
-      <div className="flex flex-col w-12 text-xs">
-        <span className="text-right">{ticker.price}</span>
-        <span>chg</span>
+      <div className="flex flex-col justify-around w-12 text-xs">
+        <span className="text-right font-medium">
+          {ticker.price.toFixed(2)}
+        </span>
+        <PercentChange percentage={percentageChange} />
       </div>
     </div>
   );

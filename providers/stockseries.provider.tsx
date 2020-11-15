@@ -16,7 +16,7 @@ interface IState {
   ticker: ITicker;
   prices: Array<IStockPrice>;
   error?: any;
-  percentageChg: number;
+  percentageChange: number;
   delta: number;
   xAccessor: any;
   yAccessor: any;
@@ -35,7 +35,7 @@ export function StockSeriesProvider({
   const { data, error } = useSWR(`/series/${ticker.symbol}`, getStockSeries);
 
   let prices = data;
-  let percentageChg = 0.0;
+  let percentageChange = 0.0;
   let delta = 0;
 
   if (prices) {
@@ -43,7 +43,7 @@ export function StockSeriesProvider({
     const start = yAccessor(prices[0]);
     const end = yAccessor(prices[prices.length - 1]);
     delta = end - start;
-    percentageChg = (delta / start) * 100;
+    percentageChange = delta / start;
   }
 
   return (
@@ -52,7 +52,7 @@ export function StockSeriesProvider({
         ticker,
         prices,
         error,
-        percentageChg,
+        percentageChange,
         delta,
         xAccessor,
         yAccessor,
