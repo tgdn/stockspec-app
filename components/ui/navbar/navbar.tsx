@@ -24,7 +24,7 @@ function Name() {
     first_name && last_name ? `${first_name} ${last_name}` : username;
 
   return (
-    <div className="flex items-center space-x-2 cursor-default rounded-md px-2 py-1 transition duration-500 hover:bg-accent-darkgray">
+    <div className="flex items-center space-x-2 cursor-default rounded-full px-2.5 py-1.5 transition duration-300 hover:bg-accent-darkgray">
       <div
         className="rounded-full w-6 h-6 bg-center bg-cover"
         style={{
