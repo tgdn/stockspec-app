@@ -3,8 +3,18 @@
 
 .row {
   @apply flex;
-  @apply items-center;
+  /* @apply items-center; */
   @apply rounded-md;
   @apply p-2.5;
   @apply bg-accent-lightblack;
+}
+
+.curve.pos {
+  fill: transparent;
+  stroke: #34d060;
+}
+
+.curve.neg {
+  fill: transparent;
+  stroke: #db2828;
 }

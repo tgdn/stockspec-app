@@ -5,6 +5,7 @@ import { SWRConfig } from "swr";
 
 import fetcher from "lib/fetch";
 import { AuthProvider } from "providers/auth.provider";
+import Gradients from "components/ui/gradients";
 
 import "styles/styles.css";
 
@@ -14,6 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>stockspec</title>
       </Head>
+      <Gradients />
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
