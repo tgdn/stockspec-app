@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 
 import Container from "components/ui/container";
 import styles from "./navbar.module.css";
+import { AuthContext, IAuthContext } from "providers/auth.provider";
 
 function Logo() {
   return (
@@ -15,11 +16,36 @@ function Logo() {
   );
 }
 
+function Name() {
+  const {
+    user: { username, first_name, last_name },
+  }: IAuthContext = useContext(AuthContext);
+  const name =
+    first_name && last_name ? `${first_name} ${last_name}` : username;
+
+  return (
+    <div className="flex items-center space-x-2 cursor-default rounded-md px-2 py-1 transition duration-500 hover:bg-accent-darkgray">
+      <div
+        className="rounded-full w-6 h-6 bg-center bg-cover"
+        style={{
+          backgroundImage: `url(http://gravatar.com/avatar?f=y&d=identicon)`,
+        }}
+      ></div>
+      <span className="font-medium">{name}</span>
+    </div>
+  );
+}
+
 export default function Navbar() {
   return (
     <header className={styles.header}>
       <Container className={styles.container}>
-        <Logo />
+        <div className="flex-1">
+          <Logo />
+        </div>
+        <div className="flex items-center">
+          <Name />
+        </div>
       </Container>
     </header>
   );
