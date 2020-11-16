@@ -60,7 +60,7 @@ function reducer(state: IState, action: IAction): IState {
       return {
         ...state,
         isLoading: false,
-        user: action.payload,
+        user: action.payload as any,
         error: undefined,
       };
     case actionTypes.FETCH_AUTH_FAILURE:
@@ -104,6 +104,7 @@ export function AuthProvider({ children }: IProps) {
 
   const loginWithEmail = (email: string, password: string): Promise<any> => {
     // return emailLogin(email, password);
+    return new Promise(() => {});
   };
 
   const logout = async () => {

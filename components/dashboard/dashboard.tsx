@@ -8,6 +8,7 @@ import {
 import Container from "components/ui/container";
 import SectionHeading from "components/dashboard/section-heading";
 import StockList from "./stock-list";
+import BetList from "components/ui/bet-list";
 
 function BetRow({ bet }: { bet: IBet }) {
   const { users = [] } = bet;
@@ -17,7 +18,7 @@ function BetRow({ bet }: { bet: IBet }) {
 }
 
 const Card = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex overflow-hidden md:h-80 xl:h-96 flex-col px-4 md:px-8 py-3 md:py-5 rounded-lg bg-accent-darkgray shadow-lg">
+  <div className="flex overflow-hidden lg:h-80 xl:h-96 flex-col px-4 xl:px-6 py-3 rounded-lg bg-accent-darkgray shadow-lg">
     {children}
   </div>
 );
@@ -30,18 +31,13 @@ function Dashboard() {
     allBetsAwaiting,
   }: IDashboardContext = useContext(DashboardContext);
   const tickers = topTickers?.results || [];
-  const userBetsList = userBets?.results || [];
-  const allBetsList = allBets?.results || [];
-  const allBetsAwaitingList = allBetsAwaiting?.results || [];
   return (
-    <Container className="mt-4 flex items-start">
-      <div className="w-2/3 pr-4 grid md:grid-cols-2 gap-6">
+    <Container className="my-4 flex items-start">
+      <div className="w-2/3 pr-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
-          <div className="flex-1 space-y-2">
-            {userBetsList.map((bet: IBet) => (
-              <BetRow bet={bet} key={`bet-${bet.id}`} />
-            ))}
+          <div className="flex-1">
+            <BetList paginatedBets={userBets} />
           </div>
           <button className="px-2 py-2 font-medium rounded-md bg-accent-lightblue text-white">
             New Bet
@@ -49,22 +45,14 @@ function Dashboard() {
         </Card>
         <Card>
           <SectionHeading>Ongoing bets</SectionHeading>
-          <div className="space-y-2">
-            {allBetsList.map((bet: IBet) => (
-              <BetRow bet={bet} key={`bet-${bet.id}`} />
-            ))}
-          </div>
+          <BetList paginatedBets={allBets} />
         </Card>
         <Card>
           <SectionHeading>Awaiting opponent </SectionHeading>
-          <div className="space-y-3">
-            {allBetsAwaitingList.map((bet: IBet) => (
-              <BetRow bet={bet} key={`bet-${bet.id}`} />
-            ))}
-          </div>
+          <BetList paginatedBets={allBetsAwaiting} />
         </Card>
       </div>
-      <div className="w-1/3 pl-2 pr-4">
+      <div className="w-1/3 pl-2">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>
     </Container>

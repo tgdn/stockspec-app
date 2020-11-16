@@ -1,0 +1,18 @@
+.table {
+  @apply w-full;
+}
+
+.table tr:not(:last-child) {
+  @apply border-b;
+  @apply border-accent-lighterblack;
+}
+
+.table tr th {
+  @apply text-sm;
+  @apply font-normal;
+  @apply text-gray-400;
+}
+
+.table tr td {
+  @apply justify-center;
+}

@@ -39,7 +39,7 @@ export function StockSeriesProvider({
   let delta = 0;
 
   if (prices && prices.length > 0) {
-    prices = prices.slice(Math.max(prices.length - 20, 0));
+    prices = prices.slice(Math.max(prices.length - 30, 0));
     const start = yAccessor(prices[prices.length - 2]);
     const end = yAccessor(prices[prices.length - 1]);
     delta = end - start;
