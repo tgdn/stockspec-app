@@ -7,10 +7,17 @@
   @apply border-accent-lighterblack;
 }
 
-.table tr th {
-  @apply text-sm;
+.table thead tr {
+  @apply border-b-2;
+  @apply border-accent-lighterblack;
+}
+
+.table thead th {
+  @apply py-2;
+  @apply text-xs;
   @apply font-normal;
   @apply text-gray-400;
+  @apply uppercase;
 }
 
 .table tr td {
