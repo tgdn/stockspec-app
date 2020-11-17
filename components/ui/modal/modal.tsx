@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { useKeyDownObserver } from "lib/hooks";
 
 function ModalOverlay() {
   return (
@@ -17,7 +18,7 @@ export function ModalContent({ children }: { children: React.ReactNode }) {
   return <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">{children}</div>;
 }
 
-export default function Modal({ children, open, close, setOpen }) {
+export default function Modal({ children, isOpen, open, close, setOpen }) {
   const modalRootId = "modal-root";
   const [mountExists, setMountExists] = useState(false);
 
@@ -35,6 +36,20 @@ export default function Modal({ children, open, close, setOpen }) {
     setMountExists(true);
   }, []);
 
+  const handleEscape = useCallback(
+    (event: any) => {
+      if (!isOpen) return;
+      if (event.key === "Escape" || event.keyCode === 27) {
+        close();
+      }
+    },
+    [isOpen, close]
+  );
+
+  useKeyDownObserver(handleEscape);
+
+  if (!isOpen) return null;
+
   const modal = (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -50,8 +65,6 @@ export default function Modal({ children, open, close, setOpen }) {
       </div>
     </div>
   );
-
-  if (!open) return null;
 
   return (
     mountExists &&
