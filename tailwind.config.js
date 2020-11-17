@@ -39,6 +39,10 @@ module.exports = {
       zIndex: {
         neg: -1,
       },
+      spacing: {
+        108: "28rem",
+        120: "32rem",
+      },
     },
   },
   variants: {},

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { IBet } from "types/bet";
-import { ITicker } from "types/ticker";
 import {
   DashboardContext,
   IDashboardContext,
@@ -9,6 +8,8 @@ import Container from "components/ui/container";
 import SectionHeading from "components/dashboard/section-heading";
 import StockList from "./stock-list";
 import BetList from "components/ui/bet-list";
+import NewBet from "components/ui/new-bet";
+import { PrimaryButton } from "components/ui/buttons";
 
 function BetRow({ bet }: { bet: IBet }) {
   const { users = [] } = bet;
@@ -32,16 +33,16 @@ function Dashboard() {
   }: IDashboardContext = useContext(DashboardContext);
   const tickers = topTickers?.results || [];
   return (
-    <Container className="my-4 flex items-start">
-      <div className="w-2/3 pr-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 gap-6">
+    <Container className="my-4 flex flex-col md:flex-row items-start space-y-4 md:space-y-0">
+      <div className="w-full md:pr-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
           <div className="flex-1">
             <BetList paginatedBets={userBets} />
           </div>
-          <button className="px-2 py-2 font-medium rounded-md bg-accent-lightblue text-white">
-            New Bet
-          </button>
+          <NewBet>
+            <PrimaryButton>New Bet</PrimaryButton>
+          </NewBet>
         </Card>
         <Card>
           <SectionHeading>Ongoing bets</SectionHeading>
@@ -52,7 +53,7 @@ function Dashboard() {
           <BetList paginatedBets={allBetsAwaiting} />
         </Card>
       </div>
-      <div className="w-1/3 pl-2">
+      <div className="w-full md:w-120 lg:w-108 xl:w-120 md:pl-2">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>
     </Container>

@@ -4,11 +4,16 @@
 .row {
   @apply flex;
   /* @apply items-center; */
-  @apply rounded-lg;
-  @apply pl-3;
-  @apply pr-3;
+  @apply sm:rounded-lg;
+  @apply px-3;
   @apply py-3;
   @apply bg-accent-lightblack;
+}
+
+.row:not(:last-child) {
+  @apply border-b;
+  @apply sm:border-none;
+  @apply border-accent-darkgray;
 }
 
 .curve.pos {
