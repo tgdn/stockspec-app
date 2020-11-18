@@ -65,7 +65,7 @@ function StockRow() {
 export default function StockList({ tickers, loading }: IStockList) {
   return (
     <div className={styles.container}>
-      <SectionHeading>Most used</SectionHeading>
+      <SectionHeading>Hot tickers</SectionHeading>
       <div className="-mx-3 sm:mx-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-0 sm:gap-2 lg:gap-3">
         {tickers.map((ticker: ITicker) => (
           <StockSeriesProvider
