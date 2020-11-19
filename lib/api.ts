@@ -26,3 +26,7 @@ export function getStockSeries(url: string): Promise<IStockPrice[]> {
   const [_, symbol] = url_re.exec(url);
   return fetcher(`${API_BASE_PATH}/api/series/${symbol}`);
 }
+
+export function getTickers(): Promise<ITicker[]> {
+  return fetcher(`${API_BASE_PATH}/api/tickers`);
+}
