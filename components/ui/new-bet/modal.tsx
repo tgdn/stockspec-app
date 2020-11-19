@@ -23,8 +23,6 @@ export default function NewBet({ children }: { children: React.ReactElement }) {
 
   const { data: tickers, error } = useSWR("/api/tickers", getTickers);
 
-  console.log(tickers);
-
   return (
     <>
       {trigger}

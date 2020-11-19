@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export default async function fetcher(
   url: string,
   args: Record<string, any> = {},
@@ -12,6 +14,12 @@ export default async function fetcher(
       "Content-Type": "text/json",
     },
   };
+
+  if (["post", "put"].indexOf(args.method?.toLowerCase()) !== -1) {
+    const csrf = Cookies.get("sspec_csrf");
+    args.headers["x-csrftoken"] = csrf;
+    console.log(csrf);
+  }
 
   const res = await fetch(url, args);
   if (!res.ok) {

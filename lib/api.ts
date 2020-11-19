@@ -30,3 +30,9 @@ export function getStockSeries(url: string): Promise<IStockPrice[]> {
 export function getTickers(): Promise<ITicker[]> {
   return fetcher(`${API_BASE_PATH}/api/tickers`);
 }
+
+// POST/PUT
+
+export function createNewBet(data: any): Promise<IBet> {
+  return fetcher(`${API_BASE_PATH}/api/bets/`, { method: "post", data });
+}
