@@ -83,9 +83,6 @@ function BetRow({ bet }: { bet: IBet }) {
       <td>
         <AmountCell amount={bet.amount} />
       </td>
-      <td>
-        <DurationCell duration={bet.duration} />
-      </td>
       <td className="text-right w-16">
         <span className="text-xs">
           {bet.end_time && dayjs(bet.end_time).from(dayjs(), true) + " left"}
@@ -106,7 +103,6 @@ export default function BetList({ paginatedBets }: IBetListProps) {
         <tr>
           <th>players</th>
           <th>$</th>
-          <th>length</th>
           <th>timeleft</th>
         </tr>
       </thead>
