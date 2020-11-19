@@ -7,8 +7,6 @@ import { ErrorMessage, Label } from "components/ui/form-control";
 const tw = resolveConfig(tailwindConfig);
 const { spacing, borderRadius, colors, fontSize } = tw.theme;
 
-console.log(colors);
-
 export const customStyles = {
   control: (provided, { isFocused }) => ({
     ...provided,
@@ -82,7 +80,6 @@ export const customStyles = {
 };
 
 const selectTheme = (theme) => {
-  console.log(theme);
   return {
     ...theme,
     borderRadius: borderRadius.lg,
@@ -102,7 +99,7 @@ function Select(props, ref: React.Ref<any>) {
   const { id = `${name}-id` } = props;
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-2">
       {label && <Label id={id}>{label}</Label>}
       <ReactSelect
         // menuIsOpen
