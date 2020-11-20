@@ -11,9 +11,16 @@ export default async function fetcher(
     headers: {
       ...(args?.headers || {}),
       Cookie: req.headers?.cookie,
-      "Content-Type": "text/json",
+      "Content-Type": "application/json",
     },
   };
+
+  // include data in post
+  const data = args["data"];
+  if (data) {
+    args["body"] = JSON.stringify(data);
+    delete args["data"];
+  }
 
   if (["post", "put"].indexOf(args.method?.toLowerCase()) !== -1) {
     const csrf = Cookies.get("sspec_csrf");
