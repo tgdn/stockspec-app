@@ -10,7 +10,7 @@ export function getTopTickers(): Promise<IPaginatedResponse<ITicker>> {
 }
 
 export function getUserBets(): Promise<IPaginatedResponse<IBet>> {
-  return fetcher(`${API_BASE_PATH}/api/bets`);
+  return fetcher(`${API_BASE_PATH}/api/bets/`);
 }
 
 export function getAllBets(): Promise<IPaginatedResponse<IBet>> {
