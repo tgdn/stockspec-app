@@ -85,6 +85,7 @@ export function NewBetForm({
         type: "local",
         message: "You need to pick 3 tickers",
       });
+      return;
     }
 
     // @ts-ignore
