@@ -21,7 +21,7 @@ export default function NewBet({ children }: { children: React.ReactElement }) {
     onClick: open,
   });
 
-  const { data: tickers, error } = useSWR("/api/tickers", getTickers);
+  const { data: tickers, error } = useSWR("/tickers", getTickers);
 
   return (
     <>

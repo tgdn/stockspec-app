@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { ITicker } from "types/ticker";
 import { ModalContent } from "components/ui/modal";
 import { PrimaryButton, TertiaryButton } from "components/ui/buttons";
 import Select from "components/ui/select";
+import { mutate } from "swr";
 
 const newBetSchema = yup.object().shape({
   amount: yup.object().required("An amount is required").nullable(true),
@@ -17,17 +18,18 @@ const newBetSchema = yup.object().shape({
 
 type TNewBetForm = yup.InferType<typeof newBetSchema>;
 
-function Buttons({ close }) {
+function Buttons({ submitting, close }: { submitting: boolean; close: any }) {
   return (
     <>
       {/* buttons */}
       <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
         <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
           <PrimaryButton
+            disabled={submitting}
             type="submit"
             className="inline-flex justify-center w-full"
           >
-            Create
+            {submitting ? "Creating..." : "Create"}
           </PrimaryButton>
         </span>
         <span className="mt-3 flex w-full rounded-md sm:mt-0 sm:w-auto">
@@ -77,6 +79,7 @@ export function NewBetForm({
   } = useForm<TNewBetForm>({
     resolver: yupResolver(newBetSchema),
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const onSubmit = async (data: TNewBetForm) => {
     console.log(data);
@@ -87,6 +90,7 @@ export function NewBetForm({
       });
       return;
     }
+    setSubmitting(true);
 
     // @ts-ignore
     data.amount = data.amount.value;
@@ -97,8 +101,13 @@ export function NewBetForm({
 
     try {
       await createNewBet(data);
+      setSubmitting(false);
+      mutate("/bets/all/awaiting");
+      mutate("/bets");
+      close();
     } catch (err) {
       console.log(err);
+      setSubmitting(false);
     }
   };
 
@@ -152,7 +161,7 @@ export function NewBetForm({
           </div>
         </div>
       </ModalContent>
-      <Buttons close={close} />
+      <Buttons submitting={submitting} close={close} />
     </form>
   );
 }
