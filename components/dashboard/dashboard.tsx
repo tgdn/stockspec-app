@@ -37,7 +37,7 @@ function Dashboard() {
       <div className="w-full md:pr-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
-          <div className="flex-1">
+          <div className="flex-1 overflow-x-auto">
             <BetList paginatedBets={userBets} />
           </div>
           <NewBet>
@@ -50,7 +50,9 @@ function Dashboard() {
         </Card>
         <Card>
           <SectionHeading>Awaiting opponent </SectionHeading>
-          <BetList paginatedBets={allBetsAwaiting} />
+          <div className="overflow-x-auto">
+            <BetList paginatedBets={allBetsAwaiting} />
+          </div>
         </Card>
       </div>
       <div className="w-full md:w-120 lg:w-108 xl:w-120 md:pl-2">
