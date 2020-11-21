@@ -57,7 +57,6 @@ function FormControl(props: IFormControlProps, ref: React.Ref<any>) {
   } = props;
 
   const { id = `${name}-id` } = props;
-  console.log(id);
 
   return (
     <>
