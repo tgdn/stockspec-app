@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 export function useKeyDownObserver(cb: (event: any) => void) {
   useEffect(() => {
@@ -9,7 +9,10 @@ export function useKeyDownObserver(cb: (event: any) => void) {
   }, [cb]);
 }
 
-export function useModalState(defaultIsOpen: boolean = false) {
+export function useModalState(
+  triggerElement: React.ReactElement,
+  defaultIsOpen: boolean = false
+) {
   const [isOpen, setOpen] = useState(defaultIsOpen);
 
   const close = useCallback(() => {
@@ -20,5 +23,11 @@ export function useModalState(defaultIsOpen: boolean = false) {
     setOpen(true);
   }, [isOpen, setOpen]);
 
-  return { isOpen, setOpen, close, open };
+  // throws
+  React.Children.only(triggerElement);
+  const trigger = React.cloneElement(triggerElement, {
+    onClick: open,
+  });
+
+  return { trigger, isOpen, setOpen, close, open };
 }

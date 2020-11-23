@@ -6,14 +6,10 @@ import { NewBetForm } from "./form";
 import { useModalState } from "lib/hooks";
 
 export default function NewBet({ children }: { children: React.ReactElement }) {
-  const { isOpen, open, close, setOpen } = useModalState(false);
-
-  // throws
-  React.Children.only(children);
-  const trigger = React.cloneElement(children, {
-    onClick: open,
-  });
-
+  const { trigger, isOpen, open, close, setOpen } = useModalState(
+    children,
+    false
+  );
   const { data: tickers, error } = useSWR("/tickers", getTickers);
 
   return (
