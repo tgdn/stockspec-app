@@ -24,6 +24,7 @@ const xAccessor = (dataPoint: IStockPrice) => new Date(dataPoint.time);
 const yAccessor = (dataPoint: IStockPrice) => dataPoint.price;
 
 function PercentChange({ percentage }: { percentage: number }) {
+  if (!percentage || isNaN(percentage)) return null;
   return (
     <div
       className={cx(styles.percentageChg, {
@@ -38,9 +39,7 @@ function PercentChange({ percentage }: { percentage: number }) {
 }
 
 function StockRow() {
-  const { ticker, percentageChange }: IStockSeriesContext = useContext(
-    StockSeriesContext
-  );
+  const { ticker }: IStockSeriesContext = useContext(StockSeriesContext);
   return (
     <div className={styles.row}>
       <div className="flex flex-col w-20 space-y-1 px-1 py-1">
@@ -54,9 +53,9 @@ function StockRow() {
       </div>
       <div className="flex flex-col justify-around w-12 text-xs">
         <span className="text-right font-medium">
-          {ticker.price.toFixed(2)}
+          {ticker.last_price && parseFloat(ticker.last_price)?.toFixed(2)}
         </span>
-        <PercentChange percentage={percentageChange} />
+        <PercentChange percentage={parseFloat(ticker.percentage_change)} />
       </div>
     </div>
   );

@@ -15,13 +15,14 @@ import styles from "./stock-list.module.css";
 
 export default function StockChart({ width, height }) {
   const {
+    ticker,
     prices,
-    delta,
     xAccessor,
     yAccessor,
   }: IStockSeriesContext = useContext(StockSeriesContext);
   if (!prices) return null;
 
+  const delta = ticker.delta ? parseFloat(ticker.delta) : 0.0;
   const margin = { left: 0, right: 0, top: 0, bottom: 0 };
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
