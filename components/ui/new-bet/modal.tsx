@@ -3,17 +3,10 @@ import useSWR from "swr";
 import { getTickers } from "lib/api";
 import Modal from "components/ui/modal";
 import { NewBetForm } from "./form";
+import { useModalState } from "lib/hooks";
 
 export default function NewBet({ children }: { children: React.ReactElement }) {
-  const [isOpen, setOpen] = useState(false);
-
-  const close = useCallback(() => {
-    setOpen(false);
-  }, [isOpen, setOpen]);
-
-  const open = useCallback(() => {
-    setOpen(true);
-  }, [isOpen, setOpen]);
+  const { isOpen, open, close, setOpen } = useModalState(false);
 
   // throws
   React.Children.only(children);
