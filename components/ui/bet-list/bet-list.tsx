@@ -3,15 +3,21 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { IPaginatedResponse } from "types/paginated-response";
 import { IBet } from "types/bet";
-import { IUser } from "types/user";
 import { AuthContext, IAuthContext } from "providers/auth.provider";
+import BetModal from "components/bet-modal";
 
 import styles from "./bet-list.module.css";
+import { IPortfolio } from "types/portfolio";
 
 dayjs.extend(relativeTime);
 
 interface IBetListProps {
   paginatedBets: IPaginatedResponse<IBet>;
+}
+
+interface IUserCellProps {
+  portfolio?: IPortfolio;
+  otherPortfolio?: IPortfolio;
 }
 
 const JoinButton = () => (
@@ -20,17 +26,12 @@ const JoinButton = () => (
   </button>
 );
 
-function UserLinkCell({
-  user,
-  otherUser,
-}: {
-  user?: IUser;
-  otherUser?: IUser;
-}) {
+function UserLinkCell({ portfolio, otherPortfolio }: IUserCellProps) {
   const {
     user: { id },
   }: IAuthContext = useContext(AuthContext);
-  const isOtherCurrentUser = otherUser?.id === id;
+  const user = portfolio?.user;
+  const isOtherCurrentUser = otherPortfolio?.user?.id === id;
 
   if (!user && !isOtherCurrentUser) {
     return (
@@ -43,12 +44,9 @@ function UserLinkCell({
   const { username } = user;
   return (
     <div className="flex items-center text-sm py-2 flex-1">
-      <a
-        href="#"
-        className="px-1 font-medium truncate rounded transition duration-100 hover:text-blue-400"
-      >
+      <span className="px-1 font-medium truncate rounded transition duration-100">
         {username}
-      </a>
+      </span>
     </div>
   );
 }
@@ -68,27 +66,29 @@ function AmountCell({ amount }) {
 }
 
 function BetRow({ bet }: { bet: IBet }) {
-  const { users = [] } = bet;
-  const [user1, user2] = users;
-  const awaiting = users?.length < 2;
+  const { portfolios = [] } = bet;
+  const [portfolio1, portfolio2] = portfolios;
+  const awaiting = (portfolios?.length || 0) < 2;
 
   return (
-    <tr className="">
-      <td>
-        <div className="flex pr-2 space-x-1">
-          <UserLinkCell user={user1} otherUser={user2} />
-          <UserLinkCell user={user2} otherUser={user1} />
-        </div>
-      </td>
-      <td>
-        <AmountCell amount={bet.amount} />
-      </td>
-      <td className="text-right w-16">
-        <span className="text-xs">
-          {bet.end_time && dayjs(bet.end_time).from(dayjs(), true) + " left"}
-        </span>
-      </td>
-    </tr>
+    <BetModal bet={bet}>
+      <tr className="">
+        <td>
+          <div className="flex pr-2 space-x-1">
+            <UserLinkCell portfolio={portfolio1} otherPortfolio={portfolio2} />
+            <UserLinkCell portfolio={portfolio2} otherPortfolio={portfolio1} />
+          </div>
+        </td>
+        <td>
+          <AmountCell amount={bet.amount} />
+        </td>
+        <td className="text-right w-16">
+          <span className="text-xs">
+            {bet.end_time && dayjs(bet.end_time).from(dayjs(), true) + " left"}
+          </span>
+        </td>
+      </tr>
+    </BetModal>
   );
 }
 

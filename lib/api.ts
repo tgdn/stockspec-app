@@ -17,6 +17,10 @@ export function getAllBets(): Promise<IPaginatedResponse<IBet>> {
   return fetcher(`${API_BASE_PATH}/api/bets/all`);
 }
 
+export function getBet(betid: number): Promise<IBet> {
+  return fetcher(`${API_BASE_PATH}/api/bets/${betid}`);
+}
+
 export function getAllBetsAwaiting(): Promise<IPaginatedResponse<IBet>> {
   return fetcher(`${API_BASE_PATH}/api/bets/all/awaiting`);
 }
