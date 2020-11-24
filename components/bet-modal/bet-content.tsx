@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { ModalContent } from "components/ui/modal";
 import { PrimaryButton, TertiaryButton } from "components/ui/buttons";
 import { IBet } from "types/bet";
@@ -41,10 +42,17 @@ function Portfolio({
   const { tickers, user, perf } = portfolio;
   return (
     <div className="flex-1 text-center">
-      <div>{user.username}</div>
+      <div className="text-xl pb-4">{user.username}</div>
       <div>
         {hasStarted ? (
-          <span className="text-3xl">{(100 * perf).toFixed(2)}%</span>
+          <span
+            className={cx("text-5xl", {
+              "text-accent-green": perf > 0,
+              "text-accent-red": perf < 0,
+            })}
+          >
+            {(100 * perf).toFixed(2)}%
+          </span>
         ) : (
           <span>Not started</span>
         )}

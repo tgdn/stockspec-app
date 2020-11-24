@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import cx from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { IPaginatedResponse } from "types/paginated-response";
@@ -30,7 +31,7 @@ function UserLinkCell({ portfolio, otherPortfolio }: IUserCellProps) {
   const {
     user: { id },
   }: IAuthContext = useContext(AuthContext);
-  const user = portfolio?.user;
+  const { user, perf } = portfolio || {};
   const isOtherCurrentUser = otherPortfolio?.user?.id === id;
 
   if (!user && !isOtherCurrentUser) {
@@ -44,8 +45,18 @@ function UserLinkCell({ portfolio, otherPortfolio }: IUserCellProps) {
   const { username } = user;
   return (
     <div className="flex items-center text-sm py-2 flex-1">
-      <span className="px-1 font-medium truncate rounded transition duration-100">
-        {username}
+      <span className="px-1 font-medium truncate rounded transition duration-100 space-x-1">
+        <span className="truncate">{username}</span>
+        {perf && (
+          <span
+            className={cx("text-xs", {
+              "text-accent-green": perf > 0,
+              "text-accent-red": perf < 0,
+            })}
+          >
+            {(100 * perf).toFixed(2)}%
+          </span>
+        )}
       </span>
     </div>
   );
