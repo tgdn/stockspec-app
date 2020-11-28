@@ -1,10 +1,9 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext } from "react";
 import useSWR from "swr";
 
 import {
   getAllBets,
   getAllBetsAwaiting,
-  getAllBetsPast,
   getTopTickers,
   getUserBets,
 } from "lib/api";
@@ -12,11 +11,7 @@ import { ITicker } from "types/ticker";
 import { IBet } from "types/bet";
 import { IPaginatedResponse } from "types/paginated-response";
 
-export const tablist = ["ongoing", "awaiting", "past"] as const;
-export type TabKey = typeof tablist[number];
-
 interface IState {
-  currentTab: TabKey;
   // tickers
   topTickers: IPaginatedResponse<ITicker>;
   topTickersError?: any;
@@ -26,19 +21,12 @@ interface IState {
   // all bets
   allBets: IPaginatedResponse<IBet>;
   allBetsError?: any;
-  // all bets pas
-  allBetsPast: IPaginatedResponse<IBet>;
-  allBetsPastError?: any;
   // all bets awaiting
   allBetsAwaiting: IPaginatedResponse<IBet>;
   allBetsAwaitingError?: any;
 }
 
-export interface IDashboardContext extends IState {
-  actions: {
-    setCurrentTab: (key: TabKey) => () => void;
-  };
-}
+export interface IDashboardContext extends IState {}
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -56,36 +44,18 @@ export function DashboardProvider({ children }) {
     "/bets/all/awaiting",
     getAllBetsAwaiting
   );
-  const { data: allBetsPast, error: allBetsPastError } = useSWR(
-    "/bets/all/past",
-    getAllBetsPast
-  );
-
-  const [currentTab, setTab] = useState(tablist[0] as TabKey);
-  const setCurrentTab = useCallback(
-    (key: TabKey) => () => {
-      setTab(key);
-    },
-    [currentTab, setTab]
-  );
 
   return (
     <DashboardContext.Provider
       value={{
-        currentTab,
         topTickers,
         topTickersError,
         userBets,
         userBetsError,
         allBets,
         allBetsError,
-        allBetsPast,
-        allBetsPastError,
         allBetsAwaiting,
         allBetsAwaitingError,
-        actions: {
-          setCurrentTab,
-        },
       }}
     >
       {children}

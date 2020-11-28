@@ -9,7 +9,5 @@ export interface ITicker {
   industry: string;
   beta?: string;
   logo_url?: string;
-  last_price?: string;
-  delta?: string;
-  percentage_change?: string;
+  price: number;
 }

@@ -17,7 +17,7 @@ interface IFormControlProps {
   [prop: string]: any;
 }
 
-export function ErrorMessage({ message }: { message: string }) {
+function ErrorMessage({ message }: { message: string }) {
   return (
     <motion.p
       initial={{ y: 20, opacity: 0 }}
@@ -29,25 +29,10 @@ export function ErrorMessage({ message }: { message: string }) {
   );
 }
 
-export function Label({
-  children,
-  id,
-}: {
-  children: React.ReactNode;
-  id: string;
-}) {
-  return (
-    <label htmlFor={id} className="font-medium text-base text-gray-200">
-      {children}
-    </label>
-  );
-}
-
 function FormControl(props: IFormControlProps, ref: React.Ref<any>) {
   const {
     type = "text",
     name,
-    label,
     className,
     onChange,
     variants,
@@ -56,18 +41,13 @@ function FormControl(props: IFormControlProps, ref: React.Ref<any>) {
     ...otherProps
   } = props;
 
-  const { id = `${name}-id` } = props;
-
   return (
     <>
       <motion.div
         variants={variants}
-        className={cx(styles.field, styles.light, className, {
-          [styles.hasError]: hasError,
-        })}
+        className={cx(styles.field, className, { [styles.hasError]: hasError })}
       >
-        {label && <Label id={id}>{label}</Label>}
-        <input id={id} {...{ name, type }} {...otherProps} ref={ref} />
+        <input {...{ name, type }} {...otherProps} ref={ref} />
       </motion.div>
       {hasError && message && (
         <ErrorMessage key={`${name}-error`} message={message} />

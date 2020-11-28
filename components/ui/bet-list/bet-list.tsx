@@ -1,18 +1,12 @@
 import React, { useContext } from "react";
-import cx from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { IPaginatedResponse } from "types/paginated-response";
 import { IBet } from "types/bet";
+import { IUser } from "types/user";
 import { AuthContext, IAuthContext } from "providers/auth.provider";
-import BetModal from "components/bet-modal";
-import EuroIcon from "components/icons/currency-euro";
-import ClockIcon from "components/icons/clock";
-import SparklesIcon from "components/icons/sparkles";
 
 import styles from "./bet-list.module.css";
-import { IPortfolio } from "types/portfolio";
-import { IUser } from "types/user";
 
 dayjs.extend(relativeTime);
 
@@ -26,97 +20,78 @@ const JoinButton = () => (
   </button>
 );
 
-interface IPortfolioLine {
-  portfolio: IPortfolio;
-  otherPortfolio: IPortfolio;
-  winner?: IUser;
-}
-
-function PortfolioLine({ portfolio, otherPortfolio, winner }: IPortfolioLine) {
+function UserLinkCell({
+  user,
+  otherUser,
+}: {
+  user?: IUser;
+  otherUser?: IUser;
+}) {
   const {
     user: { id },
   }: IAuthContext = useContext(AuthContext);
-  const { perf } = portfolio || {};
-  const isOtherCurrentUser = otherPortfolio?.user?.id === id;
-  const isWinning = perf > otherPortfolio?.perf;
+  const isOtherCurrentUser = otherUser?.id === id;
 
-  // return join button if awaiting and not self
-  if (!portfolio && !isOtherCurrentUser) {
+  if (!user && !isOtherCurrentUser) {
     return (
-      <div>
+      <div className="flex flex-1 items-center justify-center">
         <JoinButton />
       </div>
     );
-  } else if (!portfolio) {
-    return <div className="text-gray-400">Awaiting oponent</div>;
-  }
+  } else if (!user) return null;
 
+  const { username } = user;
   return (
-    <div className="flex">
-      <div className="flex space-x-1 truncate w-40">
-        <span>{portfolio.user.username}</span>
-        {winner && winner.id == portfolio.user.id && (
-          <SparklesIcon className="w-5 h-5 text-yellow-300" />
-        )}
-      </div>
-      {perf && (
-        <span
-          className={cx({
-            // "text-accent-green": perf > 0,
-            "font-black": isWinning,
-            "text-accent-green": isWinning && perf > 0,
-            "text-accent-red": isWinning && perf < 0,
-            "text-gray-300": !isWinning,
-          })}
-        >
-          {perf > 0 && "+"}
-          {(100 * perf).toFixed(2)}%
-        </span>
-      )}
+    <div className="flex items-center text-sm py-2 flex-1">
+      <a
+        href="#"
+        className="px-1 font-medium truncate rounded transition duration-100 hover:text-blue-400"
+      >
+        {username}
+      </a>
     </div>
   );
 }
 
+function DurationCell({ duration }) {
+  return (
+    <div className="text-center text-xs flex items-center justify-center">
+      <span className="bg-accent-lightblack px-1 p-0.5 rounded">
+        {duration}
+      </span>
+    </div>
+  );
+}
+
+function AmountCell({ amount }) {
+  return <div className="text-center text-sm">{amount}</div>;
+}
+
 function BetRow({ bet }: { bet: IBet }) {
-  const { amount, end_time, duration } = bet;
-  const { portfolios = [] } = bet;
-  const [portfolio1, portfolio2] = portfolios;
-  const isPast = dayjs(end_time || undefined).isBefore(dayjs(), "day");
-  const awaiting = (portfolios?.length || 0) < 2;
+  const { users = [] } = bet;
+  const [user1, user2] = users;
+  const awaiting = users?.length < 2;
 
   return (
-    <BetModal bet={bet}>
-      <div className="flex px-3 py-2 last:border-b-0 border-b-2 border-gray-700 cursor-pointer hover:bg-gray-800">
-        <div className="flex-1">
-          <PortfolioLine
-            portfolio={portfolio1}
-            otherPortfolio={portfolio2}
-            winner={bet.winner}
-          />
-          <PortfolioLine
-            portfolio={portfolio2}
-            otherPortfolio={portfolio1}
-            winner={bet.winner}
-          />
+    <tr className="">
+      <td>
+        <div className="flex pr-2 space-x-1">
+          <UserLinkCell user={user1} otherUser={user2} />
+          <UserLinkCell user={user2} otherUser={user1} />
         </div>
-        <div className="text-right">
-          <div className="flex items-center space-x-2 justify-end">
-            <span>{amount}</span>
-            <EuroIcon className="w-6 h-6 text-gray-500" />
-          </div>
-          <div className="flex items-center space-x-2 justify-end">
-            <span>
-              {portfolios.length == 2 && end_time && !isPast ? (
-                <>{dayjs(end_time).from(dayjs(), true) + " left"}</>
-              ) : (
-                <>{duration == "1W" ? "1 week" : "1 day"}</>
-              )}
-            </span>
-            <ClockIcon className="w-6 h-6 text-gray-500" />
-          </div>
-        </div>
-      </div>
-    </BetModal>
+      </td>
+      <td>
+        <AmountCell amount={bet.amount} />
+      </td>
+      <td>
+        <DurationCell duration={bet.duration} />
+      </td>
+      <td className="text-right w-16">
+        <span className="text-xs">
+          {bet.end_time && dayjs(bet.end_time).from(dayjs(), true) + " left"}
+        </span>
+      </td>
+    </tr>
   );
 }
 
@@ -125,12 +100,21 @@ export default function BetList({ paginatedBets }: IBetListProps) {
   if (!paginatedBets) return null;
 
   const betList = paginatedBets.results;
-
   return (
-    <div>
-      {betList.map((bet: IBet) => (
-        <BetRow bet={bet} key={`bet-${bet.id}`} />
-      ))}
-    </div>
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>players</th>
+          <th>$</th>
+          <th>length</th>
+          <th>timeleft</th>
+        </tr>
+      </thead>
+      <tbody>
+        {betList.map((bet: IBet) => (
+          <BetRow bet={bet} key={`bet-${bet.id}`} />
+        ))}
+      </tbody>
+    </table>
   );
 }
