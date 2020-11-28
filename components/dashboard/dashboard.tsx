@@ -7,6 +7,7 @@ import {
 import Container from "components/ui/container";
 import SectionHeading from "components/dashboard/section-heading";
 import StockList from "./stock-list";
+import TabSelector from "./tab-selector";
 import BetList from "components/ui/bet-list";
 import NewBet from "components/ui/new-bet";
 import { PrimaryButton } from "components/ui/buttons";
@@ -34,7 +35,10 @@ function Dashboard() {
   const tickers = topTickers?.results || [];
   return (
     <Container className="my-4 flex flex-col md:flex-row items-start space-y-4 md:space-y-0">
-      <div className="w-full md:pr-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-6">
+      <div className="w-full md:pr-4">
+        <TabSelector />
+      </div>
+      {/* <div className="w-full md:pr-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-6">
         <Card>
           <SectionHeading>Your bets</SectionHeading>
           <div className="flex-1 overflow-x-auto">
@@ -60,7 +64,7 @@ function Dashboard() {
             <BetList paginatedBets={allBetsAwaiting} />
           </div>
         </Card>
-      </div>
+      </div> */}
       <div className="w-full md:w-120 lg:w-108 xl:w-120 md:pl-2">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>
