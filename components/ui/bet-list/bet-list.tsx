@@ -76,10 +76,33 @@ function AmountCell({ amount }) {
   return <div className="text-center text-sm">{amount}</div>;
 }
 
+function PortfolioLine({ portfolio }: { portfolio: IPortfolio }) {
+  if (!portfolio) {
+    return (
+      <div>
+        <JoinButton />
+      </div>
+    );
+  }
+  return <div>{portfolio.user.username}</div>;
+}
+
 function BetRow({ bet }: { bet: IBet }) {
   const { portfolios = [] } = bet;
   const [portfolio1, portfolio2] = portfolios;
   const awaiting = (portfolios?.length || 0) < 2;
+
+  return (
+    <BetModal bet={bet}>
+      <div className="flex px-3 py-2 last:border-b-0 border-b-2 border-gray-700 cursor-pointer hover:bg-gray-800">
+        <div className="flex-1">
+          <PortfolioLine portfolio={portfolio1} />
+          <PortfolioLine portfolio={portfolio2} />
+        </div>
+        <div>hello</div>
+      </div>
+    </BetModal>
+  );
 
   return (
     <BetModal bet={bet}>
@@ -108,20 +131,12 @@ export default function BetList({ paginatedBets }: IBetListProps) {
   if (!paginatedBets) return null;
 
   const betList = paginatedBets.results;
+
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>players</th>
-          <th>$</th>
-          <th>timeleft</th>
-        </tr>
-      </thead>
-      <tbody>
-        {betList.map((bet: IBet) => (
-          <BetRow bet={bet} key={`bet-${bet.id}`} />
-        ))}
-      </tbody>
-    </table>
+    <div>
+      {betList.map((bet: IBet) => (
+        <BetRow bet={bet} key={`bet-${bet.id}`} />
+      ))}
+    </div>
   );
 }
