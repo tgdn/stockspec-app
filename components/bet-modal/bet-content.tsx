@@ -22,7 +22,7 @@ function Buttons({ close }: { close: any }) {
             type="button"
             className="inline-flex justify-center w-full"
           >
-            Cancel
+            Close
           </TertiaryButton>
         </span>
       </div>
