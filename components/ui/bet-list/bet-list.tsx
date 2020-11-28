@@ -8,20 +8,16 @@ import { AuthContext, IAuthContext } from "providers/auth.provider";
 import BetModal from "components/bet-modal";
 import EuroIcon from "components/icons/currency-euro";
 import ClockIcon from "components/icons/clock";
+import SparklesIcon from "components/icons/sparkles";
 
 import styles from "./bet-list.module.css";
 import { IPortfolio } from "types/portfolio";
-import CurrencyEuro from "components/icons/currency-euro";
+import { IUser } from "types/user";
 
 dayjs.extend(relativeTime);
 
 interface IBetListProps {
   paginatedBets: IPaginatedResponse<IBet>;
-}
-
-interface IUserCellProps {
-  portfolio?: IPortfolio;
-  otherPortfolio?: IPortfolio;
 }
 
 const JoinButton = () => (
@@ -30,64 +26,55 @@ const JoinButton = () => (
   </button>
 );
 
-function UserLinkCell({ portfolio, otherPortfolio }: IUserCellProps) {
+interface IPortfolioLine {
+  portfolio: IPortfolio;
+  otherPortfolio: IPortfolio;
+  winner?: IUser;
+}
+
+function PortfolioLine({ portfolio, otherPortfolio, winner }: IPortfolioLine) {
   const {
     user: { id },
   }: IAuthContext = useContext(AuthContext);
-  const { user, perf } = portfolio || {};
+  const { perf } = portfolio || {};
   const isOtherCurrentUser = otherPortfolio?.user?.id === id;
+  const isWinning = perf > otherPortfolio?.perf;
 
-  if (!user && !isOtherCurrentUser) {
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <JoinButton />
-      </div>
-    );
-  } else if (!user) return null;
-
-  const { username } = user;
-  return (
-    <div className="flex items-center text-sm py-2 flex-1">
-      <span className="px-1 font-medium truncate rounded transition duration-100 space-x-1">
-        <span className="truncate">{username}</span>
-        {perf && (
-          <span
-            className={cx("text-xs", {
-              "text-accent-green": perf > 0,
-              "text-accent-red": perf < 0,
-            })}
-          >
-            {(100 * perf).toFixed(2)}%
-          </span>
-        )}
-      </span>
-    </div>
-  );
-}
-
-function DurationCell({ duration }) {
-  return (
-    <div className="text-center text-xs flex items-center justify-center">
-      <span className="bg-accent-lightblack px-1 p-0.5 rounded">
-        {duration}
-      </span>
-    </div>
-  );
-}
-
-function AmountCell({ amount }) {
-  return <div className="text-center text-sm">{amount}</div>;
-}
-
-function PortfolioLine({ portfolio }: { portfolio: IPortfolio }) {
-  if (!portfolio) {
+  // return join button if awaiting and not self
+  if (!portfolio && !isOtherCurrentUser) {
     return (
       <div>
         <JoinButton />
       </div>
     );
+  } else if (!portfolio) {
+    return <div className="text-gray-400">Awaiting oponent</div>;
   }
-  return <div>{portfolio.user.username}</div>;
+
+  return (
+    <div className="flex">
+      <div className="flex space-x-1 truncate w-40">
+        <span>{portfolio.user.username}</span>
+        {winner && winner.id == portfolio.user.id && (
+          <SparklesIcon className="w-5 h-5 text-yellow-300" />
+        )}
+      </div>
+      {perf && (
+        <span
+          className={cx({
+            // "text-accent-green": perf > 0,
+            "font-black": isWinning,
+            "text-accent-green": isWinning && perf > 0,
+            "text-accent-red": isWinning && perf < 0,
+            "text-gray-300": !isWinning,
+          })}
+        >
+          {perf > 0 && "+"}
+          {(100 * perf).toFixed(2)}%
+        </span>
+      )}
+    </div>
+  );
 }
 
 function BetRow({ bet }: { bet: IBet }) {
@@ -101,13 +88,21 @@ function BetRow({ bet }: { bet: IBet }) {
     <BetModal bet={bet}>
       <div className="flex px-3 py-2 last:border-b-0 border-b-2 border-gray-700 cursor-pointer hover:bg-gray-800">
         <div className="flex-1">
-          <PortfolioLine portfolio={portfolio1} />
-          <PortfolioLine portfolio={portfolio2} />
+          <PortfolioLine
+            portfolio={portfolio1}
+            otherPortfolio={portfolio2}
+            winner={bet.winner}
+          />
+          <PortfolioLine
+            portfolio={portfolio2}
+            otherPortfolio={portfolio1}
+            winner={bet.winner}
+          />
         </div>
         <div className="text-right">
           <div className="flex items-center space-x-2 justify-end">
             <span>{amount}</span>
-            <CurrencyEuro className="w-6 h-6 text-gray-500" />
+            <EuroIcon className="w-6 h-6 text-gray-500" />
           </div>
           <div className="flex items-center space-x-2 justify-end">
             <span>

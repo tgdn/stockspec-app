@@ -9,6 +9,8 @@ import { PrimaryButton } from "components/ui/buttons";
 import NewBet from "components/ui/new-bet";
 import BetList from "components/ui/bet-list";
 
+const borderColor = "border-gray-600";
+
 function Ongoing(): React.ReactElement {
   const { allBets }: IDashboardContext = useContext(DashboardContext);
   return <BetList paginatedBets={allBets} />;
@@ -49,9 +51,10 @@ function TabLabel({ children, isCurrent, setCurrent }) {
     <div
       onClick={setCurrent}
       className={cx(
-        "cursor-pointer select-none md:text-lg px-2 py-3 md:px-3 md:py-2 ",
+        "cursor-pointer select-none md:text-lg px-2 py-3 md:px-3 md:py-2 border-b-4 border-transparent",
         {
-          "border-b-4": isCurrent,
+          "border-white": isCurrent,
+          "hover:border-gray-500": !isCurrent,
           "text-gray-300": !isCurrent,
           "text-white": isCurrent,
           "font-medium": isCurrent,
@@ -65,7 +68,7 @@ function TabLabel({ children, isCurrent, setCurrent }) {
 
 function Tabs({ children, setCurrent, currentTab }) {
   return (
-    <div className="flex items-center p-1 border-b-4 border-gray-700">
+    <div className={cx("flex items-center p-1 border-b-4", borderColor)}>
       <div className="flex -mb-2 md:-mb-2">
         {Object.entries(tabmap).map(([key, tab]: [TabKey, ITabOption]) => (
           <TabLabel setCurrent={setCurrent(key)} isCurrent={currentTab === key}>
@@ -88,7 +91,7 @@ export default function TabSelector() {
   >;
 
   return (
-    <div className="border-4 rounded-md border-gray-700">
+    <div className={cx("border-4 rounded-md", borderColor)}>
       <Tabs currentTab={currentTab} setCurrent={setCurrentTab}>
         <NewBet>
           <PrimaryButton>New Bet</PrimaryButton>
