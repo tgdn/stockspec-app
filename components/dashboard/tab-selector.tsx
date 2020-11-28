@@ -71,7 +71,11 @@ function Tabs({ children, setCurrent, currentTab }) {
     <div className={cx("flex items-center p-1 border-b-4", borderColor)}>
       <div className="flex -mb-2 md:-mb-2">
         {Object.entries(tabmap).map(([key, tab]: [TabKey, ITabOption]) => (
-          <TabLabel setCurrent={setCurrent(key)} isCurrent={currentTab === key}>
+          <TabLabel
+            key={`tab-${key}`}
+            setCurrent={setCurrent(key)}
+            isCurrent={currentTab === key}
+          >
             {tab.label}
           </TabLabel>
         ))}

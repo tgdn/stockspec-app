@@ -1,8 +1,10 @@
 .header {
   @apply items-start;
-  @apply shadow;
+  @apply border-b-4;
+  @apply border-gray-600;
   @apply px-4;
   @apply py-3;
+  @apply bg-accent-lighterblack;
   /* avoids map going over nav */
   z-index: 10;
 
