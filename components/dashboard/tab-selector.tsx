@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useContext } from "react";
 import cx from "classnames";
 import {
+  TabKey,
   DashboardContext,
   IDashboardContext,
 } from "providers/dashboard.provider";
@@ -8,22 +9,27 @@ import { PrimaryButton } from "components/ui/buttons";
 import NewBet from "components/ui/new-bet";
 import BetList from "components/ui/bet-list";
 
-function Ongoing() {
+function Ongoing(): React.ReactElement {
   const { allBets }: IDashboardContext = useContext(DashboardContext);
   return <BetList paginatedBets={allBets} />;
 }
 
-function Awaiting() {
+function Awaiting(): React.ReactElement {
   const { allBetsAwaiting }: IDashboardContext = useContext(DashboardContext);
   return <BetList paginatedBets={allBetsAwaiting} />;
 }
 
-function Past() {
+function Past(): React.ReactElement {
   const { allBets }: IDashboardContext = useContext(DashboardContext);
   return <BetList paginatedBets={allBets} />;
 }
 
-const tablist = {
+interface ITabOption {
+  label: string;
+  component: React.FunctionComponent | React.ReactChild;
+}
+
+const tabmap: Record<TabKey, ITabOption> = {
   ongoing: {
     label: "Ongoing",
     component: Ongoing,
@@ -61,7 +67,7 @@ function Tabs({ children, setCurrent, currentTab }) {
   return (
     <div className="flex items-center p-1 border-b-4 border-gray-700">
       <div className="flex -mb-2 md:-mb-2">
-        {Object.entries(tablist).map(([key, tab]) => (
+        {Object.entries(tabmap).map(([key, tab]: [TabKey, ITabOption]) => (
           <TabLabel setCurrent={setCurrent(key)} isCurrent={currentTab === key}>
             {tab.label}
           </TabLabel>
@@ -73,18 +79,17 @@ function Tabs({ children, setCurrent, currentTab }) {
 }
 
 export default function TabSelector() {
-  const [currentTab, setTab] = useState(Object.keys(tablist)[0]);
-  const setCurrent = useCallback(
-    (key: string) => () => {
-      setTab(key);
-    },
-    [currentTab, setTab]
-  );
-  const CurrentTab = tablist[currentTab].component;
+  const {
+    currentTab,
+    actions: { setCurrentTab },
+  }: IDashboardContext = useContext(DashboardContext);
+  const CurrentTab = tabmap[currentTab].component as React.FunctionComponent<
+    any
+  >;
 
   return (
     <div className="border-4 rounded-md border-gray-700">
-      <Tabs {...{ currentTab, setCurrent }}>
+      <Tabs currentTab={currentTab} setCurrent={setCurrentTab}>
         <NewBet>
           <PrimaryButton>New Bet</PrimaryButton>
         </NewBet>

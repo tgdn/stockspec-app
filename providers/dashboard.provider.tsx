@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, useCallback } from "react";
 import useSWR from "swr";
 
 import {
@@ -11,7 +11,11 @@ import { ITicker } from "types/ticker";
 import { IBet } from "types/bet";
 import { IPaginatedResponse } from "types/paginated-response";
 
+export const tablist = ["ongoing", "awaiting", "past"] as const;
+export type TabKey = typeof tablist[number];
+
 interface IState {
+  currentTab: TabKey;
   // tickers
   topTickers: IPaginatedResponse<ITicker>;
   topTickersError?: any;
@@ -26,7 +30,11 @@ interface IState {
   allBetsAwaitingError?: any;
 }
 
-export interface IDashboardContext extends IState {}
+export interface IDashboardContext extends IState {
+  actions: {
+    setCurrentTab: (key: TabKey) => () => void;
+  };
+}
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -45,9 +53,18 @@ export function DashboardProvider({ children }) {
     getAllBetsAwaiting
   );
 
+  const [currentTab, setTab] = useState(tablist[0] as TabKey);
+  const setCurrentTab = useCallback(
+    (key: TabKey) => () => {
+      setTab(key);
+    },
+    [currentTab, setTab]
+  );
+
   return (
     <DashboardContext.Provider
       value={{
+        currentTab,
         topTickers,
         topTickersError,
         userBets,
@@ -56,6 +73,9 @@ export function DashboardProvider({ children }) {
         allBetsError,
         allBetsAwaiting,
         allBetsAwaitingError,
+        actions: {
+          setCurrentTab,
+        },
       }}
     >
       {children}
