@@ -6,9 +6,12 @@ import { IPaginatedResponse } from "types/paginated-response";
 import { IBet } from "types/bet";
 import { AuthContext, IAuthContext } from "providers/auth.provider";
 import BetModal from "components/bet-modal";
+import EuroIcon from "components/icons/currency-euro";
+import ClockIcon from "components/icons/clock";
 
 import styles from "./bet-list.module.css";
 import { IPortfolio } from "types/portfolio";
+import CurrencyEuro from "components/icons/currency-euro";
 
 dayjs.extend(relativeTime);
 
@@ -88,8 +91,10 @@ function PortfolioLine({ portfolio }: { portfolio: IPortfolio }) {
 }
 
 function BetRow({ bet }: { bet: IBet }) {
+  const { amount, end_time, duration } = bet;
   const { portfolios = [] } = bet;
   const [portfolio1, portfolio2] = portfolios;
+  const isPast = dayjs(end_time || undefined).isBefore(dayjs(), "day");
   const awaiting = (portfolios?.length || 0) < 2;
 
   return (
@@ -99,29 +104,23 @@ function BetRow({ bet }: { bet: IBet }) {
           <PortfolioLine portfolio={portfolio1} />
           <PortfolioLine portfolio={portfolio2} />
         </div>
-        <div>hello</div>
-      </div>
-    </BetModal>
-  );
-
-  return (
-    <BetModal bet={bet}>
-      <tr className="">
-        <td>
-          <div className="flex pr-2 space-x-1">
-            <UserLinkCell portfolio={portfolio1} otherPortfolio={portfolio2} />
-            <UserLinkCell portfolio={portfolio2} otherPortfolio={portfolio1} />
+        <div className="text-right">
+          <div className="flex items-center space-x-2 justify-end">
+            <span>{amount}</span>
+            <CurrencyEuro className="w-6 h-6 text-gray-500" />
           </div>
-        </td>
-        <td>
-          <AmountCell amount={bet.amount} />
-        </td>
-        <td className="text-right w-16">
-          <span className="text-xs">
-            {bet.end_time && dayjs(bet.end_time).from(dayjs(), true) + " left"}
-          </span>
-        </td>
-      </tr>
+          <div className="flex items-center space-x-2 justify-end">
+            <span>
+              {portfolios.length == 2 && end_time && !isPast ? (
+                <>{dayjs(end_time).from(dayjs(), true) + " left"}</>
+              ) : (
+                <>{duration == "1W" ? "1 week" : "1 day"}</>
+              )}
+            </span>
+            <ClockIcon className="w-6 h-6 text-gray-500" />
+          </div>
+        </div>
+      </div>
     </BetModal>
   );
 }

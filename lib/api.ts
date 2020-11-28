@@ -25,6 +25,10 @@ export function getAllBetsAwaiting(): Promise<IPaginatedResponse<IBet>> {
   return fetcher(`${API_BASE_PATH}/api/bets/all/awaiting`);
 }
 
+export function getAllBetsPast(): Promise<IPaginatedResponse<IBet>> {
+  return fetcher(`${API_BASE_PATH}/api/bets/all/past`);
+}
+
 const url_re = /^\/series\/(.+)/;
 export function getStockSeries(url: string): Promise<IStockPrice[]> {
   const [_, symbol] = url_re.exec(url);

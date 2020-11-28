@@ -20,8 +20,8 @@ function Awaiting(): React.ReactElement {
 }
 
 function Past(): React.ReactElement {
-  const { allBets }: IDashboardContext = useContext(DashboardContext);
-  return <BetList paginatedBets={allBets} />;
+  const { allBetsPast }: IDashboardContext = useContext(DashboardContext);
+  return <BetList paginatedBets={allBetsPast} />;
 }
 
 interface ITabOption {

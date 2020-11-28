@@ -4,6 +4,7 @@ import useSWR from "swr";
 import {
   getAllBets,
   getAllBetsAwaiting,
+  getAllBetsPast,
   getTopTickers,
   getUserBets,
 } from "lib/api";
@@ -25,6 +26,9 @@ interface IState {
   // all bets
   allBets: IPaginatedResponse<IBet>;
   allBetsError?: any;
+  // all bets pas
+  allBetsPast: IPaginatedResponse<IBet>;
+  allBetsPastError?: any;
   // all bets awaiting
   allBetsAwaiting: IPaginatedResponse<IBet>;
   allBetsAwaitingError?: any;
@@ -52,6 +56,10 @@ export function DashboardProvider({ children }) {
     "/bets/all/awaiting",
     getAllBetsAwaiting
   );
+  const { data: allBetsPast, error: allBetsPastError } = useSWR(
+    "/bets/all/past",
+    getAllBetsPast
+  );
 
   const [currentTab, setTab] = useState(tablist[0] as TabKey);
   const setCurrentTab = useCallback(
@@ -71,6 +79,8 @@ export function DashboardProvider({ children }) {
         userBetsError,
         allBets,
         allBetsError,
+        allBetsPast,
+        allBetsPastError,
         allBetsAwaiting,
         allBetsAwaitingError,
         actions: {
