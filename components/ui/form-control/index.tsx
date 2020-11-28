@@ -1,1 +1,1 @@
-export { default } from "./form-control";
+export { default, Label, ErrorMessage } from "./form-control";

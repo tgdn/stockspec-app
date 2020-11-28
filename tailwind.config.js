@@ -30,6 +30,8 @@ module.exports = {
         "accent-lightgray": "#E3E5E8",
         "accent-lightblue": "#2161FE",
         "accent-darkblue": "#2253EA",
+        "accent-red": "#db2828",
+        "accent-green": "#34d060",
       },
       boxShadow: {},
       borderRadius: {
@@ -45,5 +47,9 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    extend: {
+      borderWidth: ["last"],
+    },
+  },
 };

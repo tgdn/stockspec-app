@@ -1,27 +1,8 @@
 .container {
   @apply px-3;
-}
-
-@screen sm {
-  .container {
-    @apply px-2;
-  }
-}
-
-@screen md {
-  .container {
-    @apply px-4;
-  }
-}
-
-@screen lg {
-  .container {
-    @apply mx-auto;
-  }
-}
-
-@screen xl {
-  .container {
-    @apply px-10;
-  }
+  @apply sm:px-2;
+  @apply md:px-4;
+  @apply lg:mx-auto;
+  @apply xl:px-24;
+  @apply 2xl:px-40;
 }

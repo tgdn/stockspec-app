@@ -10,19 +10,37 @@ export function getTopTickers(): Promise<IPaginatedResponse<ITicker>> {
 }
 
 export function getUserBets(): Promise<IPaginatedResponse<IBet>> {
-  return fetcher(`${API_BASE_PATH}/api/bets`);
+  return fetcher(`${API_BASE_PATH}/api/bets/`);
 }
 
 export function getAllBets(): Promise<IPaginatedResponse<IBet>> {
   return fetcher(`${API_BASE_PATH}/api/bets/all`);
 }
 
+export function getBet(betid: number): Promise<IBet> {
+  return fetcher(`${API_BASE_PATH}/api/bets/${betid}`);
+}
+
 export function getAllBetsAwaiting(): Promise<IPaginatedResponse<IBet>> {
   return fetcher(`${API_BASE_PATH}/api/bets/all/awaiting`);
+}
+
+export function getAllBetsPast(): Promise<IPaginatedResponse<IBet>> {
+  return fetcher(`${API_BASE_PATH}/api/bets/all/past`);
 }
 
 const url_re = /^\/series\/(.+)/;
 export function getStockSeries(url: string): Promise<IStockPrice[]> {
   const [_, symbol] = url_re.exec(url);
   return fetcher(`${API_BASE_PATH}/api/series/${symbol}`);
+}
+
+export function getTickers(): Promise<ITicker[]> {
+  return fetcher(`${API_BASE_PATH}/api/tickers`);
+}
+
+// POST/PUT
+
+export function createNewBet(data: any): Promise<IBet> {
+  return fetcher(`${API_BASE_PATH}/api/bets/`, { method: "post", data });
 }
