@@ -49,7 +49,13 @@ function Dashboard() {
           <BetList paginatedBets={allBets} />
         </Card>
         <Card>
-          <SectionHeading>Awaiting opponent </SectionHeading>
+          <SectionHeading>Awaiting opponent</SectionHeading>
+          <div className="overflow-x-auto">
+            <BetList paginatedBets={allBetsAwaiting} />
+          </div>
+        </Card>
+        <Card>
+          <SectionHeading>Previous bets</SectionHeading>
           <div className="overflow-x-auto">
             <BetList paginatedBets={allBetsAwaiting} />
           </div>
