@@ -1,6 +1,6 @@
 import React from "react";
 import useSWR from "swr";
-import { getBet } from "lib/api";
+import { getTickers } from "lib/api";
 import { useModalState } from "lib/hooks";
 import Modal from "components/ui/modal";
 import { JoinBetModalContent } from "./join-content";
@@ -16,15 +16,15 @@ export default function JoinBetModal({ children, bet }: IBetModal) {
     children,
     false
   );
-  const { data, error } = useSWR(`/bets/${bet.id}`, () => getBet(bet.id));
+  const { data: tickers, error } = useSWR("/tickers", getTickers);
   return (
     <>
       {trigger}
       <Modal isOpen={isOpen} open={open} close={close} setOpen={setOpen}>
-        {data ? (
-          <JoinBetModalContent close={close} bet={data} />
+        {tickers ? (
+          <JoinBetModalContent close={close} tickers={tickers} bet={bet} />
         ) : (
-          "Loading bet..."
+          "Loading tickers..."
         )}
       </Modal>
     </>

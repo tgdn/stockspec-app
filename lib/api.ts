@@ -44,3 +44,10 @@ export function getTickers(): Promise<ITicker[]> {
 export function createNewBet(data: any): Promise<IBet> {
   return fetcher(`${API_BASE_PATH}/api/bets/`, { method: "post", data });
 }
+
+export function joinBet(bet: Partial<IBet>, data: any): Promise<IBet> {
+  return fetcher(`${API_BASE_PATH}/api/bets/${bet.id}/join`, {
+    method: "post",
+    data,
+  });
+}

@@ -107,6 +107,7 @@ export function NewBetForm({
       close();
     } catch (err) {
       console.log(err);
+      alert("Something went wrong");
       setSubmitting(false);
     }
   };
