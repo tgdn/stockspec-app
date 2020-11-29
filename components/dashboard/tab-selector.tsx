@@ -12,18 +12,30 @@ import BetList from "components/ui/bet-list";
 const borderColor = "border-gray-600";
 
 function Ongoing(): React.ReactElement {
-  const { allBets }: IDashboardContext = useContext(DashboardContext);
-  return <BetList paginatedBets={allBets} />;
+  const { allBets, allBetsError }: IDashboardContext = useContext(
+    DashboardContext
+  );
+  return <BetList paginatedBets={allBets} fetchError={allBetsError} />;
 }
 
 function Awaiting(): React.ReactElement {
-  const { allBetsAwaiting }: IDashboardContext = useContext(DashboardContext);
-  return <BetList paginatedBets={allBetsAwaiting} />;
+  const {
+    allBetsAwaiting,
+    allBetsAwaitingError,
+  }: IDashboardContext = useContext(DashboardContext);
+  return (
+    <BetList
+      paginatedBets={allBetsAwaiting}
+      fetchError={allBetsAwaitingError}
+    />
+  );
 }
 
 function Past(): React.ReactElement {
-  const { allBetsPast }: IDashboardContext = useContext(DashboardContext);
-  return <BetList paginatedBets={allBetsPast} />;
+  const { allBetsPast, allBetsPastError }: IDashboardContext = useContext(
+    DashboardContext
+  );
+  return <BetList paginatedBets={allBetsPast} fetchError={allBetsPastError} />;
 }
 
 interface ITabOption {

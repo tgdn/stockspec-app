@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   future: {
@@ -17,6 +18,9 @@ module.exports = {
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        blueGray: colors.blueGray,
+        rose: colors.rose,
+        emerald: colors.emerald,
         "accent-1": "#36393f",
         "accent-2": "#2f3136",
         "accent-3": "#202225",
@@ -49,7 +53,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      borderWidth: ["last"],
+      borderWidth: ["last", "hover"],
+      borderRadius: ["last"],
     },
   },
 };
