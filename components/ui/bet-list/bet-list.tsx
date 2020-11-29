@@ -6,6 +6,7 @@ import { IPaginatedResponse } from "types/paginated-response";
 import { IBet } from "types/bet";
 import { AuthContext, IAuthContext } from "providers/auth.provider";
 import BetModal from "components/bet-modal";
+import JoinBetModal from "components/join-bet-modal";
 import EuroIcon from "components/icons/currency-euro";
 import ClockIcon from "components/icons/clock";
 import SparklesIcon from "components/icons/sparkles";
@@ -22,7 +23,13 @@ interface IBetListProps {
 }
 
 const JoinButton = () => (
-  <span className="py-0.5 px-1.5 -ml-1.5 text-sm text-blueGray-200 rounded border border-blueGray-600 group-hover:text-white group-hover:bg-blueGray-600">
+  <span
+    className={cx(
+      "font-medium py-0.5 px-1.5 -ml-1.5 rounded border",
+      "text-white bg-blueGray-600 border-blueGray-600",
+      "group-hover:text-blueGray-800 group-hover:bg-blueGray-300 group-hover:border-blueGray-300"
+    )}
+  >
     Join this bet
   </span>
 );
@@ -83,14 +90,20 @@ function PortfolioLine({ portfolio, otherPortfolio, winner }: IPortfolioLine) {
 }
 
 function BetRow({ bet }: { bet: IBet }) {
+  const {
+    user: { id },
+  }: IAuthContext = useContext(AuthContext);
   const { amount, end_time, duration } = bet;
   const { portfolios = [] } = bet;
   const [portfolio1, portfolio2] = portfolios;
+  const isSelf = portfolio1?.user?.id === id || portfolio2?.user?.id === id;
   const isPast = dayjs(end_time || undefined).isBefore(dayjs(), "day");
   const isAwaiting = (portfolios?.length || 0) < 2;
+  // here we allow others to click and join bet
+  const Modal = !isAwaiting || isSelf ? BetModal : JoinBetModal;
 
   return (
-    <BetModal bet={bet}>
+    <Modal bet={bet}>
       <div
         className={cx(
           "flex px-3 py-2 group last:rounded-b last:border-b-0 border-b-2",
@@ -127,7 +140,7 @@ function BetRow({ bet }: { bet: IBet }) {
           </div>
         </div>
       </div>
-    </BetModal>
+    </Modal>
   );
 }
 
