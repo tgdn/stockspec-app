@@ -43,30 +43,30 @@ export interface IDashboardContext extends IState {
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export function DashboardProvider({ children }) {
-  const { data: topTickers, error: topTickersError } = useSWR(
-    "/tickers/top",
-    getTopTickers
-  );
-  const { data: userBets, error: userBetsError } = useSWR("/bets", getUserBets);
-  const { data: allBets, error: allBetsError } = useSWR(
-    "/bets/all",
-    getAllBets
-  );
-  const { data: allBetsAwaiting, error: allBetsAwaitingError } = useSWR(
-    "/bets/all/awaiting",
-    getAllBetsAwaiting
-  );
-  const { data: allBetsPast, error: allBetsPastError } = useSWR(
-    "/bets/all/past",
-    getAllBetsPast
-  );
-
   const [currentTab, setTab] = useState(tablist[0] as TabKey);
   const setCurrentTab = useCallback(
     (key: TabKey) => () => {
       setTab(key);
     },
     [currentTab, setTab]
+  );
+
+  const { data: topTickers, error: topTickersError } = useSWR(
+    "/tickers/top",
+    getTopTickers
+  );
+  const { data: userBets, error: userBetsError } = useSWR("/bets", getUserBets);
+  const { data: allBets, error: allBetsError } = useSWR(
+    currentTab === "ongoing" && "/bets/all",
+    getAllBets
+  );
+  const { data: allBetsAwaiting, error: allBetsAwaitingError } = useSWR(
+    currentTab === "awaiting" && "/bets/all/awaiting",
+    getAllBetsAwaiting
+  );
+  const { data: allBetsPast, error: allBetsPastError } = useSWR(
+    currentTab === "past" && "/bets/all/past",
+    getAllBetsPast
   );
 
   return (
