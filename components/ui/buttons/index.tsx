@@ -27,7 +27,7 @@ export function Button({
 export function PrimaryButton({ className, ...props }: any) {
   return (
     <Button
-      className=" bg-accent-lightblue text-white border border-transparent shadow-sm"
+      className="bg-gradient-to-r from-orange-300 to-yellow-200 text-orange-800 hover:to-orange-300 border border-transparent shadow-sm transition duration-75"
       {...props}
     ></Button>
   );

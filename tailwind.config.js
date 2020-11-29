@@ -21,6 +21,7 @@ module.exports = {
         blueGray: colors.blueGray,
         rose: colors.rose,
         emerald: colors.emerald,
+        orange: colors.orange,
         "accent-1": "#36393f",
         "accent-2": "#2f3136",
         "accent-3": "#202225",
