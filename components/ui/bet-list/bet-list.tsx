@@ -11,7 +11,6 @@ import EuroIcon from "components/icons/currency-euro";
 import ClockIcon from "components/icons/clock";
 import SparklesIcon from "components/icons/sparkles";
 
-import styles from "./bet-list.module.css";
 import { IPortfolio } from "types/portfolio";
 import { IUser } from "types/user";
 
