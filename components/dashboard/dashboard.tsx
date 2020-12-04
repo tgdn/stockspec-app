@@ -26,45 +26,13 @@ const Card = ({ children }: { children: React.ReactNode }) => (
 );
 
 function Dashboard() {
-  const {
-    topTickers,
-    userBets,
-    allBets,
-    allBetsAwaiting,
-  }: IDashboardContext = useContext(DashboardContext);
+  const { topTickers }: IDashboardContext = useContext(DashboardContext);
   const tickers = topTickers?.results || [];
   return (
     <Container className="my-4 flex flex-col md:flex-row items-start space-y-4 md:space-y-0">
       <div className="w-full md:pr-4">
         <TabSelector />
       </div>
-      {/* <div className="w-full md:pr-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 xl:gap-6">
-        <Card>
-          <SectionHeading>Your bets</SectionHeading>
-          <div className="flex-1 overflow-x-auto">
-            <BetList paginatedBets={userBets} />
-          </div>
-          <NewBet>
-            <PrimaryButton>New Bet</PrimaryButton>
-          </NewBet>
-        </Card>
-        <Card>
-          <SectionHeading>Ongoing bets</SectionHeading>
-          <BetList paginatedBets={allBets} />
-        </Card>
-        <Card>
-          <SectionHeading>Awaiting opponent</SectionHeading>
-          <div className="overflow-x-auto">
-            <BetList paginatedBets={allBetsAwaiting} />
-          </div>
-        </Card>
-        <Card>
-          <SectionHeading>Previous bets</SectionHeading>
-          <div className="overflow-x-auto">
-            <BetList paginatedBets={allBetsAwaiting} />
-          </div>
-        </Card>
-      </div> */}
       <div className="w-full md:w-120 lg:w-108 xl:w-120 md:pl-2">
         <StockList tickers={tickers} loading={!topTickers} />
       </div>

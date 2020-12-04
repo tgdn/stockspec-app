@@ -18,7 +18,7 @@ export function getAllBets(): Promise<IPaginatedResponse<IBet>> {
 }
 
 export function getBet(betid: number): Promise<IBet> {
-  return fetcher(`${API_BASE_PATH}/api/bets/${betid}`);
+  return fetcher(`${API_BASE_PATH}/api/bets/${betid}/`);
 }
 
 export function getAllBetsAwaiting(): Promise<IPaginatedResponse<IBet>> {
@@ -46,7 +46,7 @@ export function createNewBet(data: any): Promise<IBet> {
 }
 
 export function joinBet(bet: Partial<IBet>, data: any): Promise<IBet> {
-  return fetcher(`${API_BASE_PATH}/api/bets/${bet.id}/join`, {
+  return fetcher(`${API_BASE_PATH}/api/bets/${bet.id}/join/`, {
     method: "post",
     data,
   });
