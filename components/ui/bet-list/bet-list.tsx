@@ -70,7 +70,7 @@ function PortfolioLine({ portfolio, otherPortfolio, winner }: IPortfolioLine) {
           <SparklesIcon className="w-5 h-5 text-yellow-300" />
         )}
       </div>
-      {(perf !== undefined || perf !== null) && (
+      {perf !== undefined && perf !== null && (
         <span
           className={cx({
             // "text-accent-green": perf > 0,
